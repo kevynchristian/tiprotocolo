@@ -28,7 +28,13 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link " href="../pages/billing.html">
+                <a class="nav-link 
+                
+                
+                
+                
+                
+                " href="../pages/billing.html">
 
                     <span class="nav-link-text ms-1">Protocolos de Entrada</span>
                 </a>

@@ -29,6 +29,9 @@ Route::middleware('autenticador')->group(function(){
 
     Route::prefix('/estante')->group(function(){
         Route::get('/index', [EstanteController::class, 'index'])->name('estante.index');
+        Route::get('/equipamentos', [EstanteController::class, 'status'])->name('estante.equipamentos');
+        Route::get('/pesquisa', [EstanteController::class, 'pesquisa']);
+        Route::post('/filtros', [EstanteController::class, 'filtros']);
     });
 
 });
