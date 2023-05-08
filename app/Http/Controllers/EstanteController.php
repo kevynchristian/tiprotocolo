@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Funcionario;
 use App\Models\Protocolo;
 use App\Models\ProtocoloTombamento;
 use Illuminate\Http\Request;
@@ -15,11 +16,17 @@ class EstanteController extends Controller
     {
         $status = $request->id;
         if (!empty($request->status)) {
-            $protocolos = ProtocoloTombamento::whereStatus($request->status)->whereYear('created_at', 2022)->orderBy('id', 'desc')->get();
-            return view('estante.equipamentos', compact('protocolos'));
+            $protocolos = ProtocoloTombamento::whereStatus($request->status)->whereYear('created_at', 2023)->orderBy('prioridade', 'desc')->get();
+            $funcionarios = Funcionario::whereIn('funcao', [2, 4, 5])->where(['ativo' => 1])
+                ->orderBy('nome', 'asc')
+                ->get();
+            return view('estante.equipamentos', compact('protocolos', 'funcionarios'));
         } else {
-            $protocolos = ProtocoloTombamento::whereStatus(1)->whereYear('created_at', 2023)->get();
-            return view('estante.index', compact('protocolos'));
+            $protocolos = ProtocoloTombamento::whereStatus(1)->whereYear('created_at', 2023)->orderBy('prioridade', 'desc')->get();
+            $funcionarios = Funcionario::whereIn('funcao', [2, 4, 5])->where(['ativo' => 1])
+                ->orderBy('nome', 'asc')
+                ->get();
+            return view('estante.index', compact('protocolos', 'funcionarios'));
         }
     }
     /**
@@ -27,14 +34,34 @@ class EstanteController extends Controller
      */
     public function pesquisa(Request $request)
     {
-        $protocolos = ProtocoloTombamento::where('tombamento', 'like', '%' . $request->tombamento . '%')->get();
-        return view('estante.equipamentos', compact('protocolos'));
+        $protocolos = ProtocoloTombamento::where('tombamento', 'like', '%' . $request->tombamento . '%')->whereIn('status', [1, 2, 3])->get();
+        $funcionarios = Funcionario::whereIn('funcao', [2, 4, 5])->where(['ativo' => 1])
+            ->orderBy('nome', 'asc')
+            ->get();
+        return view('estante.equipamentos', compact('protocolos', 'funcionarios'));
     }
 
     public function filtros(Request $request)
     {
         $protocolos = ProtocoloTombamento::whereStatus($request->status)->whereYear('created_at', $request->ano)->get();
-        return view('estante.equipamentos', compact('protocolos'));
+        $funcionarios = Funcionario::whereIn('funcao', [2, 4, 5])->where(['ativo' => 1])
+            ->orderBy('nome', 'asc')
+            ->get();
+        return view('estante.equipamentos', compact('protocolos', 'funcionarios'));
+    }
+    public function passar(Request $request)
+    {
+        $protocolo = ProtocoloTombamento::find($request->id);
+        if($protocolo->status == 1){
+            $protocolo->update(['status' => 2, 'id_responsavel' => $request->funcionario]);
+        }
+        elseif($protocolo->status == 2){
+            dd($request->all());
+        }
+        elseif($protocolo->status == 3){
+
+        }
+
     }
     public function create()
     {
@@ -52,9 +79,13 @@ class EstanteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $protocolo = ProtocoloTombamento::find($id);
+        if (isset($protocolo)) {
+            $protocolo->local = $protocolo->protocoloModel->escolaModel->escola;
+            return $protocolo;
+        }
     }
 
     /**

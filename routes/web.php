@@ -32,6 +32,8 @@ Route::middleware('autenticador')->group(function(){
         Route::get('/equipamentos', [EstanteController::class, 'status'])->name('estante.equipamentos');
         Route::get('/pesquisa', [EstanteController::class, 'pesquisa']);
         Route::post('/filtros', [EstanteController::class, 'filtros']);
+        Route::get('/show/{id}', [EstanteController::class, 'show']);
+        Route::post('/passar', [EstanteController::class, 'passar']);
     });
 
 });

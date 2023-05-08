@@ -208,39 +208,25 @@
 
                             </div>
                             <div class="col-sm-3 mt-3">
-                                <button type="button" data-toggle="modal" data-target="#exampleModal"
+                                <button type="button" data-toggle="modal" data-target="#modalFilter"
                                     class="btn btn-outline-dark">Filtros <i class="bi bi-sliders"></i></button>
-                                {{-- ANO
-                                <div class="form-group">
-                                    <select class="form-control ano" id="exampleFormControlSelect1 ">
-                                      <option value="0">Selecione o ano</option>
-                                      <option value="2021">2021</option>
-                                      <option value="2022">2022</option>
-                                      <option value="2023">2023</option>
-                                    </select>
-                                  </div> --}}
                             </div>
-                            <div class="col-sm-3 mt-4">
-                                {{-- STATUS --}}
-                                {{-- <div class="form-group">
-                                  <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>Selecione o status</option>
-                                    <option>Em aberto</option>
-                                    <option>Em andamento</option>
-                                    <option>Saída</option>
-                                  </select>
-                                </div> --}}
 
-                            </div>
                         </div>
                         {{-- EQUIPAMENTOS --}}
                         <div class="container" id="tabela-equipamentos">
                             <div class="row">
                                 @foreach ($protocolos as $protocolo)
                                     <div class="col-md-4 text-center">
-                                        <img style="width:100px"
+                                        <img onclick="visualizarEquipamento({{ $protocolo->id }})" type="button"
+                                            data-toggle="modal" data-target="#modalEquipamentos" style="width:100px"
                                             src="{{ URL::asset('assets/img/' . $protocolo->tipo . '.png') }}"><br>
-                                        <span><strong>{{ $protocolo->tombamento }}</strong></span><br>
+                                        @if ($protocolo->prioridade == 1)
+                                            <span
+                                                style="color: red"><strong>{{ $protocolo->tombamento }}</strong></span><br>
+                                        @else
+                                            <span><strong>{{ $protocolo->tombamento }}</strong></span><br>
+                                        @endif
                                         <span><strong>{{ date('d/m/Y', strtotime($protocolo->created_at)) }}</strong></span>
                                     </div>
                                 @endforeach
@@ -372,9 +358,8 @@
                 </div>
             </div>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <!-- Modal - Filtros -->
+        <div class="modal fade" id="modalFilter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -389,7 +374,7 @@
                             {{-- ANO --}}
                             <div class="form-group">
                                 <select class="form-control ano" id="exampleFormControlSelect1 ">
-                                    <option >Selecione o ano</option>
+                                    <option>Selecione o ano</option>
                                     <option value="2021">2021</option>
                                     <option value="2022">2022</option>
                                     <option value="2023">2023</option>
@@ -401,7 +386,7 @@
                             {{-- STATUS --}}
                             <div class="form-group">
                                 <select class="form-control status" id="exampleFormControlSelect1">
-                                    <option >Selecione o status</option>
+                                    <option>Selecione o status</option>
                                     <option value="1">Em aberto</option>
                                     <option value="2">Em andamento</option>
                                     <option value="3">Saída</option>
@@ -414,6 +399,55 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                         <button id="filtro" type="button" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal - Filtros -->
+        <div class="modal fade" id="modalEquipamentos" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> Dados do Equipamento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="id-equipamento">
+                        <span>
+                            <strong>Origem: </strong> <span id="origemModal"></span>
+                        </span>
+                        <span><br>
+                            <strong>Data de entrada: </strong> <span id="dataModal"></span>
+                        </span><br>
+                        <span>
+                            <strong>Tombamento: </strong> <span id="tombamentoModal"></span>
+                        </span><br>
+                        <span>
+                            <strong>Problema: </strong> <span id="problemaModal"></span>
+                        </span><br>
+                        <span>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1"><strong>Atribuir a um funcionário:</strong></label>
+                                <select id="funcionario" class="form-control" id="exampleFormControlSelect1">
+                                    <option disabled selected>Selecione um funcionario</option>
+                                    @foreach ($funcionarios as $funcionario)
+                                        <option value="{{$funcionario->id}}">{{ $funcionario->nome }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="modal-footer">
+                        <button  type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button data-status="2" id="btn-andamento" type="button" class="btn btn-primary">Andamento  <i class="bi bi-arrow-right"></i></button>
+                        <button data-status="1" id="btn-entrada" type="button" class="btn btn-secondary">Entrada  <i class="bi bi-arrow-left"></i></button>
+                        <button data-status="3" id="btn-saida" type="button" class="btn btn-success">Saída  <i class="bi bi-arrow-right"></i></button>
+                        <button data-status="5" id="btn-inservivel" type="button" class="btn btn-secondary">Inservivel  <i class="bi bi-arrow-down"></i></button>
+                        <button data-status="4" id="btn-retirar" type="button" class="btn btn-success">Retirar   <i class="bi bi-arrow-up"></i></button>
                     </div>
                 </div>
             </div>
