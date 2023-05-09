@@ -108,6 +108,7 @@ function equipamentoParaAndamento()
 {
     let id = $('#id-equipamento').val();
     let funcionario = mudaFuncionario();
+
    $.ajax({
     url: '/estante/passar',
     type: 'post',
@@ -120,19 +121,36 @@ function equipamentoParaAndamento()
    })
 }
 
-function equipamentoParaEntrada() {
+function equipamentoParaEntrada()
+{
     let id = $('#id-equipamento').val();
     let funcionario = mudaFuncionario();
    $.ajax({
-    url: '/estante/passar',
+       url: '/estante/passar',
     type: 'post',
     data: {
         _token, id, funcionario
     },
     success: function(){
-        location.reload();
+        $('#protocolo').remove();
     }
-   })
+})
+}
+function equipamentoParaSaida()
+{
+    let id = $('#id-equipamento').val();
+    let funcionario = mudaFuncionario();
+    let solucao = $('#solucao').val();
+    $.ajax({
+        url: '/estante/passar',
+        type: 'post',
+        data: {
+            _token, id, funcionario, solucao
+        },
+        success: function(){
+            $('#protocolo').remove();
+        }
+    })
 }
 
 function visualizarEquipamento(id)
@@ -142,17 +160,31 @@ function visualizarEquipamento(id)
         type: 'get',
         success: function(dados){
             if(dados.status == 1){
+                $("#selecionarFuncionario").show();
+                $('#solucaoModal').hide();
+                $('#statusModal').text('Em aberto');
                 $('#btn-saida').hide();
                 $('#btn-entrada').hide();
                 $('#btn-retirar').hide();
                 $('#btn-inservivel').hide();
             }
             if(dados.status == 2){
+                console.log(dados);
+                $('#funcionario').prop('disabled', false);
+                $('#funcionario').val(dados.id_responsavel);
+                $("#selecionarFuncionario").show();
+                $('#statusModal').text('Em andamento');
                 $('#btn-andamento').hide();
                 $('#btn-retirar').hide();
                 $('#btn-inservivel').hide();
             }
             if(dados.status == 3){
+                $('#funcionario').prop('disabled', true);
+                $('#solucao').prop('disabled', true);
+                $('#solucao').val(dados.solucao)
+                $('#funcionario').val(dados.id_responsavel);
+                $('#solucaoModal').attr('disabled');
+                $('#statusModal').text('Saída');
                 $('#btn-andamento').hide();
                 $('#btn-saida').hide();
                 $('#btn-entrada').hide();

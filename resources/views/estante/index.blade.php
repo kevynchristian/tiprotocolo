@@ -55,8 +55,8 @@
 <body class="g-sidenav-show   bg-gray-100">
     <input type="hidden" value="{{ csrf_token() }}" id="_token">
     <div class="min-height-300 bg-primary position-absolute w-100"></div>
-    @extends('menu.menu')
-    @section('menu')
+    @extends('layout.menu')
+    @section('conteudo')
         <main class="main-content position-relative border-radius-lg ">
             <!-- Navbar -->
             <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
@@ -270,8 +270,8 @@
             </div>
         </main>
         <div class="fixed-plugin">
-            <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-                <i class="fa fa-cog py-2"> </i>
+            <a href="{{route('protocolo.create')}}" class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+                <i class="bi bi-plus-lg"></i>
             </a>
             <div class="card shadow-lg">
                 <div class="card-header pb-0 pt-3 ">
@@ -417,37 +417,43 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="id-equipamento">
+                        <span id="statusModal" class="badge badge-sm bg-gradient-success"></span><br><br>
                         <span>
                             <strong>Origem: </strong> <span id="origemModal"></span>
                         </span>
-                        <span><br>
+                        <span><br><br>
                             <strong>Data de entrada: </strong> <span id="dataModal"></span>
-                        </span><br>
+                        </span><br><br>
                         <span>
                             <strong>Tombamento: </strong> <span id="tombamentoModal"></span>
-                        </span><br>
+                        </span><br><br>
                         <span>
                             <strong>Problema: </strong> <span id="problemaModal"></span>
-                        </span><br>
+                        </span><br><br>
                         <span>
-                            <div class="form-group">
+                            <div id="selecionarFuncionario" class="form-group">
                                 <label for="exampleFormControlSelect1"><strong>Atribuir a um funcionário:</strong></label>
                                 <select id="funcionario" class="form-control" id="exampleFormControlSelect1">
                                     <option disabled selected>Selecione um funcionario</option>
                                     @foreach ($funcionarios as $funcionario)
-                                        <option value="{{$funcionario->id}}">{{ $funcionario->nome }}</option>
+                                        <option value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </span>
                     </div>
                     <div class="modal-footer">
-                        <button  type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button data-status="2" id="btn-andamento" type="button" class="btn btn-primary">Andamento  <i class="bi bi-arrow-right"></i></button>
-                        <button data-status="1" id="btn-entrada" type="button" class="btn btn-secondary">Entrada  <i class="bi bi-arrow-left"></i></button>
-                        <button data-status="3" id="btn-saida" type="button" class="btn btn-success">Saída  <i class="bi bi-arrow-right"></i></button>
-                        <button data-status="5" id="btn-inservivel" type="button" class="btn btn-secondary">Inservivel  <i class="bi bi-arrow-down"></i></button>
-                        <button data-status="4" id="btn-retirar" type="button" class="btn btn-success">Retirar   <i class="bi bi-arrow-up"></i></button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button data-status="2" id="btn-andamento" type="button" class="btn btn-primary">Andamento <i
+                                class="bi bi-arrow-right"></i></button>
+                        <button data-status="1" id="btn-entrada" type="button" class="btn btn-secondary">Entrada <i
+                                class="bi bi-arrow-left"></i></button>
+                        <button data-status="3" id="btn-saida" type="button" class="btn btn-success">Saída <i
+                                class="bi bi-arrow-right"></i></button>
+                        <button data-status="5" id="btn-inservivel" type="button" class="btn btn-secondary">Inservivel
+                            <i class="bi bi-arrow-down"></i></button>
+                        <button data-status="4" id="btn-retirar" type="button" class="btn btn-success">Retirar <i
+                                class="bi bi-arrow-up"></i></button>
                     </div>
                 </div>
             </div>

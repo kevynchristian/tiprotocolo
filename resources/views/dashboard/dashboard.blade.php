@@ -35,11 +35,11 @@
     <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
-@extends('menu.menu')
+@extends('layout.menu')
 
 <body class="g-sidenav-show   bg-gray-100">
     <div  class="min-height-300 bg-primary position-absolute w-100"></div>
-    @section('menu')
+    @section('conteudo')
 
     <main class="main-content position-relative border-radius-lg ">
         <!-- Navbar -->

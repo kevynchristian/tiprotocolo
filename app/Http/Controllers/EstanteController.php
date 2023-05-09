@@ -51,15 +51,15 @@ class EstanteController extends Controller
     }
     public function passar(Request $request)
     {
-        $protocolo = ProtocoloTombamento::find($request->id);
+            $protocolo = ProtocoloTombamento::find($request->id);
         if($protocolo->status == 1){
             $protocolo->update(['status' => 2, 'id_responsavel' => $request->funcionario]);
         }
         elseif($protocolo->status == 2){
-            dd($request->all());
+            $protocolo->update(['status' => 1, 'id_responsavel' => $request->funcionario]);
         }
         elseif($protocolo->status == 3){
-
+            $protocolo->update(['status' => 3, 'id_responsavel' => $request->funcionario, 'soluca' => $request->solucao]);
         }
 
     }
