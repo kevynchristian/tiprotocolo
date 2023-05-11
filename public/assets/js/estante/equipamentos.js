@@ -14,9 +14,6 @@ $(document).ready(() => {
         mudaStatus();
 
     });
-    $('#filtro').click(() => {
-        filtros();
-    })
     $('#funcionario').change(() => {
         mudaFuncionario();
     })

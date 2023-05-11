@@ -53,19 +53,25 @@ class EstanteController extends Controller
     {
             $protocolo = ProtocoloTombamento::find($request->id);
         if($protocolo->status == 1){
-            $protocolo->update(['status' => 2, 'id_responsavel' => $request->funcionario]);
+            $protocolo->update(['status' => $request->statusPassar, 'id_responsavel' => $request->funcionario]);
         }
         elseif($protocolo->status == 2){
-            $protocolo->update(['status' => 1, 'id_responsavel' => $request->funcionario]);
+            if($request->statusPassar == 3){
+                $protocolo->update(['status' => $request->statusPassar, 'id_responsavel' => $request->funcionario, 'solucao' => $request->solucao]);
+            }
+            $protocolo->update(['status' => $request->statusPassar, 'id_responsavel' => $request->funcionario]);
+
         }
         elseif($protocolo->status == 3){
-            $protocolo->update(['status' => 3, 'id_responsavel' => $request->funcionario, 'soluca' => $request->solucao]);
+            if($request->statusPassar == 5){
+                $protocolo->update(['status' => $request->statusPassar]);
+            }
         }
 
     }
     public function create()
     {
-        //
+        return view('protocolo-entrada.create');
     }
 
     /**

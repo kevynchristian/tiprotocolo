@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\ProtocoloEntrada;
+use App\Http\Controllers\ProtocoloEntradaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,10 +36,12 @@ Route::middleware('autenticador')->group(function(){
         Route::post('/filtros', [EstanteController::class, 'filtros']);
         Route::get('/show/{id}', [EstanteController::class, 'show']);
         Route::post('/passar', [EstanteController::class, 'passar']);
+        Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');
     });
 
-    Route::prefix('/protocolo/entrada')->group(function(){
-        Route::get('/create', [ProtocoloEntrada::class, 'create'])->name('protocolo.create');
+    Route::prefix('/protocolo')->group(function(){
+        Route::get('/create', [ProtocoloEntradaController::class, 'create'])->name('protocolo.create');
+        Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
     });
 
 });

@@ -15,6 +15,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+
         $atendimentoEscola = AtendimentoEscola::all()->count();
         $atendimentoInterno = AtendimentoInterno::all()->count();
         $laudoInserviveis = Inservivel::all()->count();

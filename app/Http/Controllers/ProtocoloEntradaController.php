@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Escola;
+use App\Models\Protocolo;
+use App\Models\Setor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class ProtocoloEntrada extends Controller
+class ProtocoloEntradaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -19,7 +22,10 @@ class ProtocoloEntrada extends Controller
      */
     public function create()
     {
-        return view('protocolo-entrada.create');
+        $setorInterno = Setor::orderBy('setor', 'asc')->get();
+        $escolas = Escola::orderBy('escola', 'asc')->get();
+        return view('protocolo-entrada.create', compact('escolas', 'setorInterno'));
+
     }
 
     /**
@@ -27,7 +33,11 @@ class ProtocoloEntrada extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Protocolo::create([
+            'escola' => $request->origem,
+            'data' => $request->data,
+            'usuario' => 0
+        ]);
     }
 
     /**
