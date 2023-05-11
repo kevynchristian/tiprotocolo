@@ -58,7 +58,7 @@
             <div class="row">
               <div class="col-8">
                 <div class="numbers">
-                  <p class="text-sm mb-0 text-uppercase font-weight-bold">Laudos de <br> Inservível</p>
+                  <p class="text-sm mb-0 text-uppercase font-weight-bold">Laudos de Inservível</p>
                   <h5 class="font-weight-bolder">
                     {{$laudoInserviveis}}
                   </h5>

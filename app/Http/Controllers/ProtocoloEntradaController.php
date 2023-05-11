@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Escola;
+use App\Models\Local;
 use App\Models\Protocolo;
 use App\Models\Setor;
+use App\Models\TipoDeEquipamento;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,9 +25,11 @@ class ProtocoloEntradaController extends Controller
      */
     public function create()
     {
+        $tipos = TipoDeEquipamento::all();
+        $locais = Local::all();
         $setorInterno = Setor::orderBy('setor', 'asc')->get();
         $escolas = Escola::orderBy('escola', 'asc')->get();
-        return view('protocolo-entrada.create', compact('escolas', 'setorInterno'));
+        return view('protocolo-entrada.create', compact('escolas', 'setorInterno', 'tipos', 'locais'));
 
     }
 
@@ -33,11 +38,27 @@ class ProtocoloEntradaController extends Controller
      */
     public function store(Request $request)
     {
-        Protocolo::create([
-            'escola' => $request->origem,
-            'data' => $request->data,
-            'usuario' => 0
-        ]);
+        try{
+            if($request->setor = 0){
+                $protocolos = Protocolo::create([
+                    'escola' => $request->origem,
+                    'data' => $request->data,
+                    'usuario' => 0
+                ]);
+                return [0 => 1, 1 => $protocolos->id];
+            }else{
+                $protocolos = Protocolo::create([
+                    'escola' => $request->origem,
+                    'setor_interno' => $request->setor,
+                    'data' => $request->data,
+                    'usuario' => 0
+                ]);
+                return [0 => 1, 1 => $protocolos->id];
+            }
+
+        }catch(Exception $ex){
+            return 0;
+        }
     }
 
     /**

@@ -4,7 +4,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\ProtocoloEntrada;
 use App\Http\Controllers\ProtocoloEntradaController;
+use App\Http\Controllers\ProtocoloTombamentoController;
 use App\Http\Controllers\UserController;
+use App\Models\ProtocoloTombamento;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,5 +45,7 @@ Route::middleware('autenticador')->group(function(){
         Route::get('/create', [ProtocoloEntradaController::class, 'create'])->name('protocolo.create');
         Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
     });
-
+    Route::prefix('/protocolo-tombamento')->group(function(){
+        Route::post('/store/{id}', [ProtocoloTombamentoController::class, 'store']);
+    });
 });
