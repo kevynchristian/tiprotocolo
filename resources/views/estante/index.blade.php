@@ -1,5 +1,10 @@
 @extends('layout.template')
 @section('content')
+@section('title')
+        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Estante</li>
+        </ol>
+        <h6 class="font-weight-bolder text-white mb-0">Estante</h6>
+@endsection
     <style>
         .back-btn {
             background-color: #024f9b;

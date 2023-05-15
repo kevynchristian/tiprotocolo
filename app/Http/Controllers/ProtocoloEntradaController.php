@@ -75,6 +75,22 @@ class ProtocoloEntradaController extends Controller
         return view('protocolo-entrada.modal-index', compact('protocolos'));
     }
 
+    public function mudaAno(Request $request)
+    {
+       if($request->ano == 0){
+            $protocolos = Protocolo::orderBy('created_at', 'desc')->get();
+            return view('protocolo-entrada.tabela-equipamento-index', compact('protocolos'));
+       }
+            $protocolos = Protocolo::orderBy('created_at', 'desc')->whereYear('created_at', $request->ano)->get();
+            return view('protocolo-entrada.tabela-equipamento-index', compact('protocolos'));
+
+    }
+    public function pesquisa(Request $request)
+    {
+        $protocolos = Protocolo::where('id', 'like', '%' . $request->pesquisa . '%')->get();
+        return view('protocolo-entrada.tabela-equipamento-index', compact('protocolos'));
+
+    }
     /**
      * Show the form for editing the specified resource.
      */

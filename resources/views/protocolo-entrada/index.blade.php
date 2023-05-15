@@ -1,5 +1,10 @@
 @extends('layout.template')
 @section('content')
+@section('title')
+    <li class="breadcrumb-item text-sm text-white active" aria-current="page">Protocolos</li>
+    </ol>
+    <h6 class="font-weight-bolder text-white mb-0">Protocolos</h6>
+@endsection
 <input type="hidden" id="_token" value="{{ csrf_token() }}">
     <div class="row">
         <div class="col-12">
@@ -12,9 +17,32 @@
                         <span id="msg"></span>
                       </div>
                 </div>
+                <div class="container text-center">
+                    <div class="row align-items-start">
+                        <div class="col-4">
+                          <select id="ano" class="form-select" aria-label="Default select example">
+                              <option selected>Ano</option>
+                              <option value="2023">2023</option>
+                              <option value="2022">2022</option>
+                              <option value="2021">2021</option>
+                              <option value="2020">2020</option>
+                              <option value="2019">2019</option>
+                              <option value="2018">2018</option>
+                              <option value="2017">2017</option>
+                              <option value="0">Todos</option>
+                            </select>
+                      </div>
+                      <div class="col-4">
+                          <div class="mb-3">
+                              <input id="pesquisa" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Pesquisa">
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
+                        <table id="tabela-equipamentos" class="table align-items-center mb-0">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Protocolo
@@ -106,7 +134,7 @@
             </div>
         </div>
     </div>
-    {{$protocolos->links() }}
+   <span id="pagination"> {{$protocolos->links() }}</span>
     {{-- MODAL EXCLUIR --}}
     <div class="modal fade" id="excluirModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

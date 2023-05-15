@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstanteController;
+use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\ProtocoloEntrada;
 use App\Http\Controllers\ProtocoloEntradaController;
 use App\Http\Controllers\ProtocoloTombamentoController;
@@ -47,10 +48,17 @@ Route::middleware('autenticador')->group(function(){
         Route::get('/index', [ProtocoloEntradaController::class, 'index'])->name('protocolo.index');
         Route::get('/show/{id}', [ProtocoloEntradaController::class, 'show'])->name('protocolo.show');
         Route::delete('/destroy/{id}', [ProtocoloEntradaController::class, 'destroy'])->name('protocolo.destroy');
+        Route::get('/mudaAno', [ProtocoloEntradaController::class, 'mudaAno'])->name('protocolo.ano');
+        Route::get('/pesquisa', [ProtocoloEntradaController::class, 'pesquisa'])->name('protocolo.pesquisa');
     });
     Route::prefix('/protocolo-tombamento')->group(function(){
         Route::post('/store/{id}', [ProtocoloTombamentoController::class, 'store']);
         Route::delete('/destroy/{id}', [ProtocoloTombamentoController::class, 'destroy']);
         Route::get('/pdf/{id}', [ProtocoloTombamentoController::class, 'pdf']);
+    });
+
+    Route::prefix('/historico')->group(function(){
+        Route::get('/index', [HistoricoController::class, 'index'])->name('historico.index');
+        Route::get('show/{id}', [HistoricoController::class, 'show'])->name('historico.show');
     });
 });

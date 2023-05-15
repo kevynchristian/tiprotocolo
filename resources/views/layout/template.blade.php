@@ -24,8 +24,11 @@
     <title>
         ProtocolosTI
     </title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+    </script>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
@@ -62,7 +65,7 @@
         <hr class="horizontal dark mt-0">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link active" href="{{route('dashboard')}}">
+                <a class="nav-link active" href="{{ route('dashboard') }}">
 
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
@@ -77,19 +80,24 @@
             <li class="nav-item ms-3">
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
-                      <h2 class="accordion-header">
-                        <button style="font-size: 14px" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                          Protocolos de Entrada
-                        </button>
-                      </h2>
-                      <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <div style="color: black" class="list-group">
-                                <a href="{{ route('protocolo.create') }}" class="list-group-item list-group-item-action">Cadastrar</a>
-                                <a href="{{ route('protocolo.index') }}" class="list-group-item list-group-item-action">Ver todos</a>
-                              </div>
+                        <h2 class="accordion-header">
+                            <button style="font-size: 14px" class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                aria-controls="flush-collapseOne">
+                                Protocolos de Entrada
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div style="color: black" class="list-group">
+                                    <a href="{{ route('protocolo.create') }}"
+                                        class="list-group-item list-group-item-action">Cadastrar</a>
+                                    <a href="{{ route('protocolo.index') }}"
+                                        class="list-group-item list-group-item-action">Ver todos</a>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
                 </div>
             </li>
@@ -125,7 +133,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="../pages/sign-up.html">
+                <a class="nav-link " href="{{ route('historico.index') }}">
 
                     <span class="nav-link-text ms-1">Histórico de Máquinas </span>
                 </a>
@@ -147,10 +155,8 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white"
-                                href="javascript:;">Pages</a></li>
-                        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
-                    </ol>
-                    <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
+                                href="javascript:;">Home</a></li>
+                        @yield('title')
                 </nav>
                 <ul class="navbar-nav  justify-content-end">
                     @if (Auth::check())

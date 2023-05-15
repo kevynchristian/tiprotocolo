@@ -6,7 +6,27 @@ $(document).ready(function(){
     $('#excluir').click(() => {
         excluir();
     })
+    $('#ano').change(() => {
+        mudaAno();
+    });
+    $('#pesquisa').on('input', () => {
+        pesquisa();
+    });
 })
+function mudaAno(){
+    let ano = $('#ano').val();
+    $.ajax({
+        url: '/protocolo/mudaAno',
+        type: 'get',
+        data: {ano},
+        beforeSend: function() {
+
+        },
+        success: function(dados){
+            $('#tabela-equipamentos').html(dados);
+        }
+    })
+}
 function visualizar(id){
     let tempoInicial = performance.now();
     $.ajax({
@@ -72,4 +92,16 @@ function excluir() {
 }
 function exibirIdParaExcluir(id){
     $('#protocolo-id').val(id)
+}
+function pesquisa() {
+    let pesquisa = $('#pesquisa').val();
+    $.ajax({
+        url: '/protocolo/pesquisa',
+        type: 'get',
+        data: {pesquisa},
+        success: function(dados){
+            $('#tabela-equipamentos').html(dados);
+            $('#pagination').remove();
+        }
+    })
 }
