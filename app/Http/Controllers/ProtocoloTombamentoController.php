@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\ProtocoloTombamento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
+use Exception;
 
 class ProtocoloTombamentoController extends Controller
 {
@@ -41,9 +44,20 @@ class ProtocoloTombamentoController extends Controller
             'id_responsavel' => Auth::user()->id
         ]);
         $protocolos = ProtocoloTombamento::where('id_protocolo', $id)->get();
-        return $protocolos;
+        return view('protocolo-entrada.tabela-equipamentos', compact('protocolos'));
     }
+    public function pdf($id)
+    {
+        try{
+            $dados = ProtocoloTombamento::with('protocoloModel')->where('id_protocolo', $id)->first();
+            $equipamentos = ProtocoloTombamento::with('protocoloModel')->where('id_protocolo', $id)->get();
+            $pdf = PDF::loadView('protocolo-entrada.pdf', compact('equipamentos', 'dados'));
+            return $pdf->stream();
 
+        }catch(Exception $e){
+            return 0;
+        }
+    }
     /**
      * Display the specified resource.
      */
@@ -73,6 +87,13 @@ class ProtocoloTombamentoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        try{
+            $equipamento = ProtocoloTombamento::find($id)->delete();
+            return 1;
+        }catch(\Exception $e){
+            return 0;
+
+        }
     }
 }

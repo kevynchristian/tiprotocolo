@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Escola;
 use App\Models\Local;
 use App\Models\Protocolo;
+use App\Models\ProtocoloTombamento;
 use App\Models\Setor;
 use App\Models\TipoDeEquipamento;
 use Exception;
+use Illuminate\Contracts\Pagination\Paginator as PaginationPaginator;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\PaginationState;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 
 class ProtocoloEntradaController extends Controller
@@ -18,6 +22,8 @@ class ProtocoloEntradaController extends Controller
      */
     public function index()
     {
+        $protocolos = Protocolo::whereYear('created_at', 2023)->orderBy('created_at', 'desc')->simplePaginate(7);
+        return view('protocolo-entrada.index', compact('protocolos'));
     }
 
     /**
@@ -30,7 +36,6 @@ class ProtocoloEntradaController extends Controller
         $setorInterno = Setor::orderBy('setor', 'asc')->get();
         $escolas = Escola::orderBy('escola', 'asc')->get();
         return view('protocolo-entrada.create', compact('escolas', 'setorInterno', 'tipos', 'locais'));
-
     }
 
     /**
@@ -38,15 +43,8 @@ class ProtocoloEntradaController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            if($request->setor = 0){
-                $protocolos = Protocolo::create([
-                    'escola' => $request->origem,
-                    'data' => $request->data,
-                    'usuario' => 0
-                ]);
-                return [0 => 1, 1 => $protocolos->id];
-            }else{
+        try {
+            if ($request->origem = 91) {
                 $protocolos = Protocolo::create([
                     'escola' => $request->origem,
                     'setor_interno' => $request->setor,
@@ -54,9 +52,16 @@ class ProtocoloEntradaController extends Controller
                     'usuario' => 0
                 ]);
                 return [0 => 1, 1 => $protocolos->id];
+            } else {
+                $protocolos = Protocolo::create([
+                    'escola' => $request->origem,
+                    'setor_interno' => 0,
+                    'data' => $request->data,
+                    'usuario' => 0
+                ]);
+                return [0 => 1, 1 => $protocolos->id];
             }
-
-        }catch(Exception $ex){
+        } catch (Exception $ex) {
             return 0;
         }
     }
@@ -64,9 +69,10 @@ class ProtocoloEntradaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $protocolos = ProtocoloTombamento::with('protocoloModel')->where('id_protocolo', $id)->get();
+        return view('protocolo-entrada.modal-index', compact('protocolos'));
     }
 
     /**
@@ -88,8 +94,14 @@ class ProtocoloEntradaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, $id)
     {
-        //
+        try {
+            $protocolo = Protocolo::find($id)->delete();
+            $equipamentos = ProtocoloTombamento::where('id_protocolo', $id)->delete();
+            return 1;
+        }catch(Exception $ex){
+            return 0;
+        }
     }
 }

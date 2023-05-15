@@ -22,7 +22,7 @@ class Protocolo extends Model {
     public function setor(){
         return $this->hasOne(Setor::class,'id_setor','setor_interno');
     }
-    
+
     public function dataFormatada() {
         $data = $this->data;
         $ano = substr($data, 0, 4);
@@ -34,22 +34,26 @@ class Protocolo extends Model {
     public function equipamentos() {
         return ProtocoloTombamento::where('id_protocolo','=', $this->id)->get();
     }
-    
+
     public function getDia(){
         $data = $this->data;
         $dia = substr($data, 8, 2);
         return $dia;
     }
-    
+
     public function getMes(){
         $data = $this->data;
         $mes = substr($data, 5, 2);
         return $mes;
     }
-    
+
     public function getAno(){
         $data = $this->data;
         $ano = substr($data, 2, 2);
         return $ano;
+    }
+    public function protocoloTombamentoModel()
+    {
+        return $this->hasMany(ProtocoloTombamento::class, 'id_protocolo', 'id');
     }
 }

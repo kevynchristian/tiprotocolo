@@ -9,7 +9,11 @@
                     <div class="alert alert-success text-center" role="alert">
                         <strong> Protocolo cadastrado com sucesso!</strong>
                       </div>
-
+                </div>
+                <div style="display: none"  id="error" class="col-4 mb-3 mx-auto p-2">
+                    <div class="alert alert-danger text-center" role="alert">
+                        <strong id="msg"></strong>
+                      </div>
                 </div>
                 <div class="container off-set">
                     <div class="row align-items-center">
@@ -44,9 +48,17 @@
                         <div class="col-12 d-flex justify-content-end ">
                             <button style="display: none"  data-bs-toggle="modal" data-bs-target="#exampleModal" id="criar-equipamento" class="btn btn-success "><i class="bi bi-plus-lg"></i></button>
 
-                            <button style="display: none"  id="imprimir"class="btn btn-secondary"><i class="bi bi-filetype-pdf"></i></button>
+                            <button onclick="pdf()" style="display: none"  id="imprimir"class="btn btn-secondary ms-3"><i class="bi bi-filetype-pdf"></i></button>
                           </div>
 
+                    </div>
+                </div>
+                <div class="row" id="tabela-equipamentos" style="display: none;">
+                    <div class="form-group">
+                        <br>
+                        <div class="col-md-8 col-md-offset-2 mx-auto" id="equipamentos">
+
+                        </div>
                     </div>
                 </div>
             </div>

@@ -9,6 +9,7 @@ $(document).ready(() => {
         cadastrarEquipamento();
     })
 
+
 });
 
 
@@ -54,7 +55,7 @@ function clickPrioridade()
             return 0;
         }
 }
-clickPrioridade();
+
 function cadastrarEquipamento()
 {
     let dados = {
@@ -73,6 +74,46 @@ function cadastrarEquipamento()
         data: dados,
         success: function(dados){
             console.log(dados);
+            $('#tabela-equipamentos').show();
+            $('#equipamentos').html(dados);
         }
     });
+}
+function excluir(id){
+    $.ajax({
+        url: `/protocolo-tombamento/destroy/${id}`,
+        type: 'DELETE',
+        data: {_token},
+        success: function(dados){
+            if(dados == 1 ){
+                $(`#tr-id-${id}`).remove();
+            }else{
+                $('#error').show();
+                $('#msg').text("Erro ao excluir");
+                setTimeout(() => {
+                    $('#error').hide();
+                }, 2000);
+            }
+        }
+
+    });
+}
+function pdf() {
+    id =  $('#id-protocolo').val();
+    $.ajax({
+        url: `/protocolo-tombamento/pdf/${id},_blank`,
+        type: 'get',
+        success: function(dados) {
+            if(dados == 0 ){
+                $('#error').show();
+                $('#msg').text("Você precisa cadastrar um equipamento!");
+                setTimeout(() => {
+                    $('#error').hide();
+                }, 2000);
+            }else{
+                window.open(`/protocolo-tombamento/pdf/${id},_blank`);
+
+            }
+        }
+    })
 }

@@ -7951,50 +7951,7 @@ fieldset:disabled .btn {
   content: "";
 }
 
-.text-bg-primary {
-  color: #000 !important;
-  background-color: RGBA(94, 114, 228, var(--bs-bg-opacity, 1)) !important;
-}
 
-.text-bg-secondary {
-  color: #000 !important;
-  background-color: RGBA(131, 146, 171, var(--bs-bg-opacity, 1)) !important;
-}
-
-.text-bg-success {
-  color: #000 !important;
-  background-color: RGBA(45, 206, 137, var(--bs-bg-opacity, 1)) !important;
-}
-
-.text-bg-info {
-  color: #000 !important;
-  background-color: RGBA(17, 205, 239, var(--bs-bg-opacity, 1)) !important;
-}
-
-.text-bg-warning {
-  color: #000 !important;
-  background-color: RGBA(251, 99, 64, var(--bs-bg-opacity, 1)) !important;
-}
-
-.text-bg-danger {
-  color: #000 !important;
-  background-color: RGBA(245, 54, 92, var(--bs-bg-opacity, 1)) !important;
-}
-
-.text-bg-light {
-  color: #000 !important;
-  background-color: RGBA(233, 236, 239, var(--bs-bg-opacity, 1)) !important;
-}
-
-.text-bg-dark {
-  color: #fff !important;
-  background-color: RGBA(52, 71, 103, var(--bs-bg-opacity, 1)) !important;
-}
-
-.text-bg-white {
-  color: #000 !important;
-  background-color: RGBA(255, 255, 255, var(--bs-bg-opacity, 1)) !important;
-}
 
 .link-primary {
   color: #5e72e4 !important;
@@ -20097,37 +20054,7 @@ fieldset:disabled .btn {
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-.alert-primary {
-  background-image: linear-gradient(310deg, #5e72e4 0%, #673bde 100%);
-}
 
-.alert-secondary {
-  background-image: linear-gradient(310deg, #627594 0%, #8ca1cb 100%);
-}
-
-.alert-success {
-  background-image: linear-gradient(310deg, #2dce89 0%, #26adab 100%);
-}
-
-.alert-info {
-  background-image: linear-gradient(310deg, #1171ef 0%, #0eadca 100%);
-}
-
-.alert-warning {
-  background-image: linear-gradient(310deg, #fb6340 0%, #faa118 100%);
-}
-
-.alert-danger {
-  background-image: linear-gradient(310deg, #f5365c 0%, #f3410f 100%);
-}
-
-.alert-light {
-  background-image: linear-gradient(310deg, #CED4DA 0%, #d1dae6 100%);
-}
-
-.alert-dark {
-  background-image: linear-gradient(310deg, #212229 0%, #0f1112 100%);
-}
 
 .btn-close:focus {
   box-shadow: none;

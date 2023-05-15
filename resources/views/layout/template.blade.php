@@ -74,17 +74,24 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link
-
-
-
-
-
-                " href="../pages/billing.html">
-
-                    <span class="nav-link-text ms-1">Protocolos de Entrada</span>
-                </a>
+            <li class="nav-item ms-3">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header">
+                        <button style="font-size: 14px" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                          Protocolos de Entrada
+                        </button>
+                      </h2>
+                      <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div style="color: black" class="list-group">
+                                <a href="{{ route('protocolo.create') }}" class="list-group-item list-group-item-action">Cadastrar</a>
+                                <a href="{{ route('protocolo.index') }}" class="list-group-item list-group-item-action">Ver todos</a>
+                              </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link " href="../pages/virtual-reality.html">
@@ -150,7 +157,7 @@
                         <li class="nav-item d-flex align-items-center">
                             <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
                                 <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                                <span class="d-sm-inline d-none">{{ strtoupper(Auth::user()->name) }}</span>
                             </a>
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">

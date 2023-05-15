@@ -8,7 +8,7 @@ class ProtocoloTombamento extends Model
 {
     protected $table = 'protocolo_tombamento';
     protected $guarded = [];
-    
+
     public $rules = [
         'id_protocolo'  => 'required|numeric',
         'tipo'          => 'required|numeric|min:1',
@@ -16,23 +16,23 @@ class ProtocoloTombamento extends Model
         'prioridade'    => 'required|numeric',
         'desc'          => 'required|max:100'
     ];
-    
+
     public function funcionarioModel(){
-        return $this->belongsTo(Funcionario::class,'id_responsavel','id');
+        return $this->hasOne(Funcionario::class,'id','id_responsavel');
     }
-    
+
     public function statusModel(){
         return $this->hasOne(Status::class,'id','status');
     }
-    
+
     public function protocoloModel(){
         return $this->belongsTo(Protocolo::class,'id_protocolo','id');
     }
-    
+
     public function tipoModel(){
         return $this->hasOne(TipoDeEquipamento::class,'id','tipo');
     }
-    
+
     public function localModel(){
         return $this->hasOne(Local::class,'id','local');
     }

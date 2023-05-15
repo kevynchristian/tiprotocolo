@@ -44,8 +44,13 @@ Route::middleware('autenticador')->group(function(){
     Route::prefix('/protocolo')->group(function(){
         Route::get('/create', [ProtocoloEntradaController::class, 'create'])->name('protocolo.create');
         Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
+        Route::get('/index', [ProtocoloEntradaController::class, 'index'])->name('protocolo.index');
+        Route::get('/show/{id}', [ProtocoloEntradaController::class, 'show'])->name('protocolo.show');
+        Route::delete('/destroy/{id}', [ProtocoloEntradaController::class, 'destroy'])->name('protocolo.destroy');
     });
     Route::prefix('/protocolo-tombamento')->group(function(){
         Route::post('/store/{id}', [ProtocoloTombamentoController::class, 'store']);
+        Route::delete('/destroy/{id}', [ProtocoloTombamentoController::class, 'destroy']);
+        Route::get('/pdf/{id}', [ProtocoloTombamentoController::class, 'pdf']);
     });
 });

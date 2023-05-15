@@ -36,7 +36,7 @@
                 <div class="container" id="tabela-equipamentos">
                     <div class="row">
                         @foreach ($protocolos as $protocolo)
-                            <div class="col-md-4 text-center">
+                            <div id="equipamento-{{$protocolo->id}}" class="col-md-4 text-center">
                                 <img onclick="visualizarEquipamento({{ $protocolo->id }})" type="button"
                                     data-bs-toggle="modal" data-bs-target="#modalEquipamentos" style="width:100px"
                                     src="{{ URL::asset('assets/img/' . $protocolo->tipo . '.png') }}"><br>
@@ -153,6 +153,7 @@
             </div>
         </div>
     </div>
+
     <div class="fixed-plugin">
         <a href="{{route('protocolo.create')}}" class="fixed-plugin-button text-dark position-fixed px-3 py-2">
             <i class="bi bi-plus-lg"></i>

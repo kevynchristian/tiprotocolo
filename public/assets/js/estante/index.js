@@ -116,7 +116,7 @@ function equipamentoParaAndamento() {
             _token, id, funcionario, statusPassar
         },
         success: function () {
-            location.reload();
+            $(`#equipamento-${id}`).remove();
         }
     })
 }
@@ -132,7 +132,7 @@ function equipamentoParaEntrada() {
             _token, id, funcionario, statusPassar
         },
         success: function () {
-            location.reload();
+            $(`#equipamento-${id}`).remove();
         }
     })
 }
@@ -148,7 +148,7 @@ function equipamentoParaSaida() {
             _token, id, funcionario, solucao, statusPassar
         },
         success: function () {
-            location.reload();
+            $(`#equipamento-${id}`).remove();
 
         }
     })
@@ -166,7 +166,7 @@ function equipamentoParaRetirada() {
         },
 
         success: function () {
-            location.reload();
+            $(`#equipamento-${id}`).remove();
 
         }
     })
@@ -183,7 +183,7 @@ function equipamentoParaInservivel() {
             _token, id, funcionario, statusPassar
         },
         success: function () {
-            $('#protocolo').remove();
+            $(`#equipamento-${id}`).remove();
         }
     })
 }

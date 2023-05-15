@@ -15,6 +15,9 @@ class Funcionario extends Model {
     public function funcaoModel() {
         return $this->hasOne(Funcao::class, 'id', 'funcao');
     }
+    public function protocoloTombamentoModel() {
+        return $this->hasMany(ProtocoloTombamento::class, 'id', 'id_responsavel');
+    }
 
     public function atendimentosInternos($ano = 0) {
         if( $ano == 0 ){
@@ -25,7 +28,7 @@ class Funcionario extends Model {
                 ->where('funcionario' , '=' , $this->id)
                 ->count();
     }
-    
+
     public function atendimentosEscolas($ano = 0) {
         if( $ano == 0 ){
             return AtendimentoEscola::where('funcionario_fez' , '=' , $this->id)
@@ -35,7 +38,7 @@ class Funcionario extends Model {
                 ->where('funcionario_fez' , '=' , $this->id)
                 ->count();
     }
-    
+
     public function consertosEmMaquinas($ano = 0) {
         if( $ano == 0 ){
             return DB::table('protocolo_tombamento')
