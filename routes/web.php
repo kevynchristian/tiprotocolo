@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\HistoricoController;
+use App\Http\Controllers\InservivelController;
 use App\Http\Controllers\ProtocoloEntrada;
 use App\Http\Controllers\ProtocoloEntradaController;
 use App\Http\Controllers\ProtocoloTombamentoController;
@@ -32,6 +33,22 @@ Route::middleware('autenticador')->group(function(){
         Route::get('/index', [DashboardController::class, 'index'])->name('dashboard');
     });
 
+    Route::prefix('/protocolo')->group(function(){
+        Route::get('/create', [ProtocoloEntradaController::class, 'create'])->name('protocolo.create');
+        Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
+        Route::get('/index', [ProtocoloEntradaController::class, 'index'])->name('protocolo.index');
+        Route::get('/show/{id}', [ProtocoloEntradaController::class, 'show'])->name('protocolo.show');
+        Route::delete('/destroy/{id}', [ProtocoloEntradaController::class, 'destroy'])->name('protocolo.destroy');
+        Route::get('/mudaAno', [ProtocoloEntradaController::class, 'mudaAno'])->name('protocolo.ano');
+        Route::get('/pesquisa', [ProtocoloEntradaController::class, 'pesquisa'])->name('protocolo.pesquisa');
+    });
+
+    Route::prefix('/protocolo-tombamento')->group(function(){
+        Route::post('/store/{id}', [ProtocoloTombamentoController::class, 'store']);
+        Route::delete('/destroy/{id}', [ProtocoloTombamentoController::class, 'destroy']);
+        Route::get('/pdf/{id}', [ProtocoloTombamentoController::class, 'pdf']);
+    });
+
     Route::prefix('/estante')->group(function(){
         Route::get('/index', [EstanteController::class, 'index'])->name('estante.index');
         Route::get('/equipamentos', [EstanteController::class, 'status'])->name('estante.equipamentos');
@@ -42,25 +59,17 @@ Route::middleware('autenticador')->group(function(){
         Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');
     });
 
-    Route::prefix('/protocolo')->group(function(){
-        Route::get('/create', [ProtocoloEntradaController::class, 'create'])->name('protocolo.create');
-        Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
-        Route::get('/index', [ProtocoloEntradaController::class, 'index'])->name('protocolo.index');
-        Route::get('/show/{id}', [ProtocoloEntradaController::class, 'show'])->name('protocolo.show');
-        Route::delete('/destroy/{id}', [ProtocoloEntradaController::class, 'destroy'])->name('protocolo.destroy');
-        Route::get('/mudaAno', [ProtocoloEntradaController::class, 'mudaAno'])->name('protocolo.ano');
-        Route::get('/pesquisa', [ProtocoloEntradaController::class, 'pesquisa'])->name('protocolo.pesquisa');
+    Route::prefix('/inservivel')->group(function(){
+        Route::get('/create', [InservivelController::class, 'create'])->name('inservivel.create');
+        Route::get('/show/{id}', [InservivelController::class, 'show'])->name('inservivel.show');
+        Route::get('/create/pesquisa', [InservivelController::class, 'pesquisa'])->name('inservivel.pesquisa');
     });
-    Route::prefix('/protocolo-tombamento')->group(function(){
-        Route::post('/store/{id}', [ProtocoloTombamentoController::class, 'store']);
-        Route::delete('/destroy/{id}', [ProtocoloTombamentoController::class, 'destroy']);
-        Route::get('/pdf/{id}', [ProtocoloTombamentoController::class, 'pdf']);
-    });
-
     Route::prefix('/historico')->group(function(){
         Route::get('/index', [HistoricoController::class, 'index'])->name('historico.index');
         Route::get('show/{id}', [HistoricoController::class, 'show'])->name('historico.show');
         Route::get('/pdf/{id}', [HistoricoController::class, 'pdf'])->name('historico.pdf');
         Route::delete('/destroy/{id}', [HistoricoController::class, 'destroy'])->name('historico.destroy');
+        Route::get('/pesquisa', [HistoricoController::class, 'pesquisa'])->name('historico.pesquisa');
+
     });
 });

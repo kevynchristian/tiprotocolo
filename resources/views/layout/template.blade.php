@@ -115,7 +115,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link " href="../pages/profile.html">
+                <a class="nav-link " href="{{route('inservivel.create')}}">
 
                     <span class="nav-link-text ms-1">Inservível</span>
                 </a>

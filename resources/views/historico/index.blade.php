@@ -15,11 +15,11 @@
             </div>
             <div class="col-5 ms-3">
                 <div class="mb-3">
-                    <input type="text" placeholder="Pesquisa" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="text" placeholder="Pesquisa" class="form-control" id="pesquisa" aria-describedby="emailHelp">
                 </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-                <div class="table-responsive p-0">
+                <div id="tabela-maquinas" class="table-responsive p-0">
                   <table class="table align-items-center mb-0">
                     <thead>
                       <tr>
@@ -28,11 +28,12 @@
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Data</th>
                         <th class="text-secondary opacity-7"></th>
                         <th class="text-secondary opacity-7"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($maquinas as $maquina)
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($maquinas as $maquina)
 
+                    <input type="hidden" value="0" id="id-equipamento">
                         <tr id="maquina-{{$maquina->id}}">
                             <td>
                                 <div class="d-flex px-2 py-1">
@@ -72,7 +73,7 @@
 
 
             </div>
-            {{ $maquinas->links() }}
+           <span id="pagination"> {{ $maquinas->links() }}</span>
     </div>
 </div>
 <div class="modal fade" id="modalEquipamentos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -83,7 +84,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <input type="hidden" value="0" id="id-equipamento">
                 <span id="statusModal" class="badge badge-sm bg-gradient-success"></span><br><br>
                 <span>
                     <strong>Origem: </strong> <span id="origemModal"></span>

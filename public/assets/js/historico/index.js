@@ -1,10 +1,17 @@
 let _token = $('#_token').val();
-$(document).ready(function(){
+$(document).ready(function()
+{
     $('#excluir').click(() => {
         excluir();
     })
+    $('#pesquisa').on('input', function(){
+        if($('#pesquisa').val().length > 2){
+            pesquisa();
+        }
+    })
 })
-function visualizar(id) {
+function visualizar(id)
+ {
     $.ajax({
         url: `/historico/show/${id}`,
         type: 'get',
@@ -31,9 +38,9 @@ function visualizar(id) {
         }
     })
 }
-function valorId(id){
+function valorId(id)
+{
     let teste = $('#id-equipamento').val(id);
-    console.log(teste);
 }
 function pdf(id) {
     $.ajax({
@@ -44,7 +51,9 @@ function pdf(id) {
         }
     })
 }
-function excluir(id) {
+function excluir()
+{
+    let id = $('#id-equipamento').val();
     $.ajax({
         url: `/historico/destroy/${id}`,
         type: 'delete',
@@ -52,6 +61,19 @@ function excluir(id) {
         success: function(dados) {
             $(`#maquina-${id}`).remove();
 
+        }
+    })
+}
+function pesquisa()
+{
+    let pesquisa = $('#pesquisa').val();
+    $.ajax({
+        url: '/historico/pesquisa',
+        type: 'get',
+        data: {pesquisa},
+        success: function(dados){
+            $('#pagination').hide();
+            $('#tabela-maquinas').html(dados);
         }
     })
 }

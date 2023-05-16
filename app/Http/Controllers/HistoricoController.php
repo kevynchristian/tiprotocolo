@@ -52,6 +52,11 @@ class HistoricoController extends Controller
             return $protocolo;
         }
     }
+    public function pesquisa(Request $request)
+    {
+        $maquinas = ProtocoloTombamento::where('tombamento','like', '%'. $request->pesquisa . '%')->whereIn('status', [4,5,6])->get();
+        return view('historico.table-equipamentos', compact('maquinas'));
+    }
 
     /**
      * Show the form for editing the specified resource.
