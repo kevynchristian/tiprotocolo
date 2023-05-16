@@ -60,5 +60,7 @@ Route::middleware('autenticador')->group(function(){
     Route::prefix('/historico')->group(function(){
         Route::get('/index', [HistoricoController::class, 'index'])->name('historico.index');
         Route::get('show/{id}', [HistoricoController::class, 'show'])->name('historico.show');
+        Route::get('/pdf/{id}', [HistoricoController::class, 'pdf'])->name('historico.pdf');
+        Route::delete('/destroy/{id}', [HistoricoController::class, 'destroy'])->name('historico.destroy');
     });
 });

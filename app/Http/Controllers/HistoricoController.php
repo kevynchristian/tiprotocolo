@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Funcionario;
 use App\Models\ProtocoloTombamento;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 
 class HistoricoController extends Controller
 {
@@ -13,9 +16,15 @@ class HistoricoController extends Controller
     public function index()
     {
         $maquinas = ProtocoloTombamento::whereIn('status', [4,6])->orderBy('created_at', 'desc')->simplePaginate(5);
-        return view('historico.index', compact('maquinas'));
+        $funcionarios = Funcionario::all();
+        return view('historico.index', compact('maquinas', 'funcionarios'));
     }
-
+    public function pdf($id)
+    {
+        $equipamentos = ProtocoloTombamento::with('protocoloModel')->find($id);
+        $pdf = PDF::loadView('historico.pdf', compact('equipamentos'));
+        return $pdf->stream();
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -63,8 +72,8 @@ class HistoricoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        ProtocoloTombamento::find($id)->delete();
     }
 }
