@@ -21,7 +21,8 @@ class InservivelController extends Controller
      */
     public function create()
     {
-        $equipamentos = Equipamentos::all();
+
+        $equipamentos = Equipamentos::orderBy('equipamento', 'asc')->get();
         $inserviveis = ProtocoloTombamento::where('status', 5)->orderBy('created_at', 'desc')->simplePaginate(7);
         return view('inservivel.create', compact('inserviveis', 'equipamentos'));
     }
@@ -35,7 +36,21 @@ class InservivelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inserviveis = ProtocoloTombamento::find($request->id);
+        $inserviveis->update(['status' => 6]);
+        dd($inserviveis->protocoloModel->setor);
+        if($inserviveis){
+            // Inservivel::create([
+            //     'id_protocolo_tombamento' => $request->id,
+            //     'marca' => $request->marca,
+            //     'modelo' => $request->modelo,
+            //     'serie' => $request->serie,
+            //     'tipo_problema' => $inserviveis->tipoModel->desc,
+            //     'diretoria_id' => ,
+            //     'setor' => $inserviveis->protocoloModel->setor->id_setor,
+            //     'id_equipamento' => $request->equipamento
+            // ]);
+        }
     }
 
     /**

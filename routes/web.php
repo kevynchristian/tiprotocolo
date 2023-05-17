@@ -9,6 +9,7 @@ use App\Http\Controllers\ProtocoloEntradaController;
 use App\Http\Controllers\ProtocoloTombamentoController;
 use App\Http\Controllers\UserController;
 use App\Models\ProtocoloTombamento;
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,6 +64,7 @@ Route::middleware('autenticador')->group(function(){
         Route::get('/create', [InservivelController::class, 'create'])->name('inservivel.create');
         Route::get('/show/{id}', [InservivelController::class, 'show'])->name('inservivel.show');
         Route::get('/create/pesquisa', [InservivelController::class, 'pesquisa'])->name('inservivel.pesquisa');
+        Route::post('/store', [InservivelController::class, 'store'])->name('inservivel.store');
     });
     Route::prefix('/historico')->group(function(){
         Route::get('/index', [HistoricoController::class, 'index'])->name('historico.index');

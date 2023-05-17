@@ -11,4 +11,7 @@ class Setor extends Model
     public function diretoriaModel(){
         return $this->hasMany(Diretoria::class,'diretoria_id','id');
     }
+    public function protocoloModel(){
+        return $this->belongsTo(Protocolo::class, 'id_setor', 'setor_interno');
+    }
 }

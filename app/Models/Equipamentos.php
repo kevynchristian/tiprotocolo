@@ -12,6 +12,6 @@ class Equipamentos extends Model
     protected $fillable = ['equipamento'];
 
     public function inservivelModel(){
-        return $this->hasMany(Inservivel::class, 'id_equipamento', 'id');
+        return $this->hasMany(Inservivel::class, 'id', 'id_equipamento');
     }
 }

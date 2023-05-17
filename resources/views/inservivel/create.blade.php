@@ -5,6 +5,7 @@
     </ol>
     <h6 class="font-weight-bolder text-white mb-0">Inservível</h6>
 @endsection
+<input type="hidden" value="{{csrf_token()}}" name="" id="_token">
 <div class="row">
     <div class="col-12">
         <div class="card mb-4 card-1">
@@ -37,6 +38,9 @@
                             @foreach ($inserviveis as $inservivel)
                                 <tr>
                                     <td>
+                                        <input type="button" value="{{$inservivel->id}}" id="id-inservivel">
+                                        <input type="button" id="setor_id" value="{{$inservivel->protocoloModel->setor->id_setor}}" >
+                                        <input type="button" id="diretoria_id" value="{{$inservivel->protocoloModel->setor->diretoria_id}}" >
                                         <div class="d-flex px-2 py-1">
                                             <div>
                                                 <img src="{{ asset('/assets/img/' . $inservivel->tipo . '.png') }}"
@@ -63,10 +67,10 @@
                                     </td>
 
                                     <td class="align-middle">
-                                        <button onclick="visualizar({{ $inservivel->id_protocolo }})"
+                                        <button onclick="visualizar({{ $inservivel->id }})"
                                             id="visualizar" data-bs-toggle="modal" data-bs-target="#modalView"
                                             class="btn btn-primary"><i class="bi bi-tv"></i></button>
-                                        <button id="laudo" onclick="visualizar({{ $inservivel->id_protocolo }})" data-bs-toggle="modal" data-bs-target="#modalView"
+                                        <button id="laudo" onclick="visualizar({{ $inservivel->id }})" data-bs-toggle="modal" data-bs-target="#modalView"
                                             class="btn btn-info"><i class="bi bi-pencil-square"></i></button>
                                     </td>
                                 </tr>
@@ -113,7 +117,7 @@
                     <div id="modal-2">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Problema:</label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select id="equipamento" class="form-select" aria-label="Default select example">
                                 <option selected>Selecione o problema</option>
                                 @foreach ($equipamentos as $equipamento)
                                     <option value="{{$equipamento->id}}">{{$equipamento->equipamento}}</option>
@@ -122,18 +126,22 @@
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Marca</label>
-                            <input type="text" id="marca" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input required type="text" id="marca" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Modelo</label>
-                            <input type="text" id="modelo" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input required type="text" id="modelo" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Número de série:</label>
-                            <input type="email" id="n-serie" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input required type="email" id="n-serie" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <div id="btn-criar">
+                            <button type="button" class="btn btn-primary">Devolver</button>
+                            <button id="gerar-laudo" type="button" class="btn btn-info">Gerar</button>
+                        </div>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>

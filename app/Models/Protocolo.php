@@ -20,7 +20,7 @@ class Protocolo extends Model {
     }
 
     public function setor(){
-        return $this->hasOne(Setor::class,'id_setor','setor_interno');
+        return $this->hasOne(Setor::class,'id_setor', 'setor_interno');
     }
 
     public function dataFormatada() {
