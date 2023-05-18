@@ -2,8 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Role;
+use App\Models\RoleUser;
+use App\Models\User;
 use Illuminate\Contracts\Pagination\Paginator as PaginationPaginator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,5 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::define('protocolo', function (User $user) {
+           return $user->rolesModel->role_id == 1;
+        });
     }
 }

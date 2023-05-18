@@ -10,6 +10,11 @@
     <div class="col-12">
         <div class="card mb-4 card-1">
             <h4 class="mt-3 text-center">Listagem de equipamentos com defeito </h4><br>
+            <div style="display: none; text-align: center" id="msg" class="col-4 mx-auto">
+                <div id="style-msg" class="alert alert-success" role="alert">
+                    <span id="msg-text"></span>
+                  </div>
+            </div>
             <div class="col-5 ms-3">
                 <div class="mb-3">
                     <input type="text" placeholder="Pesquisa" class="form-control" id="pesquisa"
@@ -36,11 +41,9 @@
                         </thead>
                         <tbody>
                             @foreach ($inserviveis as $inservivel)
-                                <tr>
-                                    <td>
-                                        <input type="button" value="{{$inservivel->id}}" id="id-inservivel">
-                                        <input type="button" id="setor_id" value="{{$inservivel->protocoloModel->setor->id_setor}}" >
-                                        <input type="button" id="diretoria_id" value="{{$inservivel->protocoloModel->setor->diretoria_id}}" >
+                            <tr id="inservivel-{{$inservivel->id}}">
+                                <td>
+                                        <input type="hidden" value="{{$inservivel->id}}" id="id-inservivel">
                                         <div class="d-flex px-2 py-1">
                                             <div>
                                                 <img src="{{ asset('/assets/img/' . $inservivel->tipo . '.png') }}"
@@ -139,9 +142,9 @@
                     </div>
                     <div class="modal-footer">
                         <div id="btn-criar">
-                            <button type="button" class="btn btn-primary">Devolver</button>
                             <button id="gerar-laudo" type="button" class="btn btn-info">Gerar</button>
                         </div>
+                        <button id="devolver" type="button" class="btn btn-primary">Devolver</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>

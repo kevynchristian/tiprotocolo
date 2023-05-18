@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card mb-4 card-1">
                 <h4 class="mt-3 text-center">Cadastrar Protocolo de entrada de Equipamentos </h4>
-                <div style="display: none" id="success" class="col-4 mb-3 mx-auto p-2">
+                <div  style="display: none" id="success" class="col-4 mb-3 mx-auto p-2">
                     <div class="alert alert-success text-center" role="alert">
                         <strong> Protocolo cadastrado com sucesso!</strong>
                       </div>

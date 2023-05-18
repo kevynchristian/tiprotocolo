@@ -8,6 +8,7 @@ use App\Http\Controllers\ProtocoloEntrada;
 use App\Http\Controllers\ProtocoloEntradaController;
 use App\Http\Controllers\ProtocoloTombamentoController;
 use App\Http\Controllers\UserController;
+use App\Models\Inservivel;
 use App\Models\ProtocoloTombamento;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 //LOGIN
 
-Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::get('/', [UserController::class, 'login'])->name('login');
 Route::post('/login/store', [UserController::class, 'storeLogin'])->name('login.store');
 Route::get('/logout/{id}', [UserController::class, 'logout'])->name('logout');
 //DASHBOARD
@@ -63,8 +64,12 @@ Route::middleware('autenticador')->group(function(){
     Route::prefix('/inservivel')->group(function(){
         Route::get('/create', [InservivelController::class, 'create'])->name('inservivel.create');
         Route::get('/show/{id}', [InservivelController::class, 'show'])->name('inservivel.show');
+        Route::post('/devolver', [InservivelController::class, 'devolver'])->name('inservivel.devolver');
         Route::get('/create/pesquisa', [InservivelController::class, 'pesquisa'])->name('inservivel.pesquisa');
+        Route::get('/index/pesquisa', [InservivelController::class, 'pesquisaIndex'])->name('inservivel.pesquisaIndex');
         Route::post('/store', [InservivelController::class, 'store'])->name('inservivel.store');
+        Route::get('/pdf/{id}', [InservivelController::class, 'pdf'])->name('inservivel.pdf');
+        Route::get('/index', [InservivelController::class, 'index'])->name('inservivel.index');
     });
     Route::prefix('/historico')->group(function(){
         Route::get('/index', [HistoricoController::class, 'index'])->name('historico.index');
@@ -73,5 +78,9 @@ Route::middleware('autenticador')->group(function(){
         Route::delete('/destroy/{id}', [HistoricoController::class, 'destroy'])->name('historico.destroy');
         Route::get('/pesquisa', [HistoricoController::class, 'pesquisa'])->name('historico.pesquisa');
 
+    });
+    Route::prefix('/usuarios')->group(function(){
+        Route::get('/create', [UserController::class, 'create'])->name('user.create');
+        Route::post('/store', [UserController::class, 'store'])->name('user.store');
     });
 });

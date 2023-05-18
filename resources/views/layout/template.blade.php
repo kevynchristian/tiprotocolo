@@ -114,11 +114,29 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link " href="{{route('inservivel.create')}}">
-
-                    <span class="nav-link-text ms-1">Inservível</span>
-                </a>
+            <li class="nav-item ms-3">
+                <div class="accordion accordion-flush" id="inservivel">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button style="font-size: 14px" class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapsed-inservivel" aria-expanded="false"
+                                aria-controls="collapsed-inservivel">
+                               Inservível
+                            </button>
+                        </h2>
+                        <div id="collapsed-inservivel" class="accordion-collapse collapse"
+                            data-bs-parent="#inservivel">
+                            <div class="accordion-body">
+                                <div style="color: black" class="list-group">
+                                    <a href="{{ route('inservivel.create') }}"
+                                        class="list-group-item list-group-item-action">Criar laudo</a>
+                                    <a href="{{ route('inservivel.index') }}"
+                                        class="list-group-item list-group-item-action">Ver todos</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link " href="../pages/sign-in.html">
@@ -138,13 +156,14 @@
                     <span class="nav-link-text ms-1">Histórico de Máquinas </span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link " href="../pages/sign-up.html">
+            @if(Gate::allows('protocolo'))
+                <li class="nav-item">
+                    <a class="nav-link " href="{{route('user.create')}}">
 
-                    <span class="nav-link-text ms-1">Usuários</span>
-                </a>
-            </li>
-
+                        <span class="nav-link-text ms-1">Usuários</span>
+                    </a>
+                </li>
+            @endif
     </aside>
     <main class="main-content position-relative border-radius-lg ">
 

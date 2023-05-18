@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Funcao;
+use App\Models\Funcionario;
+use App\Models\Role;
+use App\Models\RoleUser;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +26,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $funcoes = Funcao::all();
+        $tipos = Role::all();
+        return view('user.create', compact('funcoes', 'tipos'));
     }
 
     /**
@@ -28,7 +36,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $senha = '$2a$12$n7fLncjyhEg.pdchlD11wOtOCiohWohA8UZmjKhoUuhUCyWEOBrey';
+            $funcionario = Funcionario::create([
+                'nome' => $request->nome,
+                'funcao' => $request->funcao,
+                'ativo' => 1,
+            ]);
+            $user = User::create([
+                'name' => $request->usuario,
+                'email' => $request->email,
+                'funcionario' => $funcionario->id,
+                'password' => $senha
+            ]);
+            RoleUser::create([
+                'user_id' => $user->id,
+                'role_id' => $request->tipo
+            ]);
+            return 1;
+        } catch (Exception $e) {
+            return 0;
+        }
     }
 
     /**
@@ -68,9 +97,9 @@ class UserController extends Controller
     }
     public function storeLogin(Request $request)
     {
-        if(Auth::attempt(['name' => $request->name, 'password' => $request->password])){
+        if (Auth::attempt(['name' => $request->name, 'password' => $request->password])) {
             return redirect()->route('dashboard');
-        }else{
+        } else {
             return redirect()->back()->with('msg', 'Dados incorretos!');
         }
     }

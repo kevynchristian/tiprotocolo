@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\PaginationState;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProtocoloEntradaController extends Controller
 {
@@ -31,11 +32,13 @@ class ProtocoloEntradaController extends Controller
      */
     public function create()
     {
-        $tipos = TipoDeEquipamento::all();
-        $locais = Local::all();
-        $setorInterno = Setor::orderBy('setor', 'asc')->get();
-        $escolas = Escola::orderBy('escola', 'asc')->get();
-        return view('protocolo-entrada.create', compact('escolas', 'setorInterno', 'tipos', 'locais'));
+
+            $tipos = TipoDeEquipamento::all();
+            $locais = Local::all();
+            $setorInterno = Setor::orderBy('setor', 'asc')->get();
+            $escolas = Escola::orderBy('escola', 'asc')->get();
+            return view('protocolo-entrada.create', compact('escolas', 'setorInterno', 'tipos', 'locais'));
+        return redirect()->back();
     }
 
     /**

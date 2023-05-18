@@ -2,24 +2,29 @@ let _token = $('#_token').val();
 $(document).ready(function(){
     $('#pesquisa').on('input', function(){
         pesquisa();
-    })
+    });
     $('#laudo').click(() => {
         $('#modal-1').hide();
         $('#modal-2').show();
         $('#btn-criar').show();
-    })
+        $('#devolver').hide();
+    });
     $('#visualizar').click(() => {
         $('#modal-1').show();
         $('#modal-2').hide();
         $('#btn-criar').hide();
-    })
+        $('#devolver').show();
+    });
     $('#gerar-laudo').click(() => {
         gerarLaudo();
-    })
+    });
+    $('#devolver').click(() => {
+        devolver();
+    });
 })
 function visualizar(id)
 {
-    let teste = $('#id-inservivel').val(id);
+    $('#id-inservivel').val(id);
     let origem = $('#origemModal');
     let funcionario = $('#funcionarioModal');
     let tombamento = $('#tombamentoModal');
@@ -62,14 +67,50 @@ function gerarLaudo()
     let modelo = $('#modelo').val();
     let serie = $('#n-serie').val();
     $.ajax({
-        url: '/inservivel/store',
+        url: `/inservivel/store`,
         type: 'post',
         data: {_token, id , equipamento, marca, modelo, serie},
-        success: function(){
-
+        success: function(dados){
+            window.open(`/inservivel/pdf/${id},_blank`);
+            location.reload();
         }
     })
+}
+function devolver()
+{
+    let id = $('#id-inservivel').val();
+    $.ajax({
+        url: '/inservivel/devolver',
+        type: 'post',
+        data: {_token, id},
+        success: function(dados){
+            console.log(dados);
+            if(dados[1] == 1){
+                $('#msg').show();
+                $('#style-msg').removeClass('alert-danger');
+                $('#style-msg').addClass('alert-success');
+                $('#msg-text').text('Equipamento devolvido');
+                setTimeout(() => {
+                    $('#msg').hide();
+                }, 2000);
 
+                $('#modalView').modal('hide');
+                $(`#inservivel-${dados[0]}`).remove();
 
+            }
+            if(dados == 0){
+                $('#msg').show();
+                $('#style-msg').removeClass('alert-success');
+                $('#style-msg').addClass('alert-danger');
+                $('#msg-text').text('Erro ao devolver o equipamento');
+                setTimeout(() => {
+                    $('#msg').hide();
+                }, 2000);
+
+                $('#modalView').modal('hide');
+            }
+            
+        }
+    })
 }
 
