@@ -5,11 +5,12 @@
 </ol>
 <h6 class="font-weight-bolder text-white mb-0">Usuários</h6>
 @endsection
+
 <input type="hidden" id="_token" value="{{ csrf_token() }}">
     <div class="row">
         <div class="col-12">
             <div class="card mb-4 card-1">
-                <h4 class="mt-3 text-center">Criar novo usuário  </h4><br>
+                <h4 class="mt-3 text-center">Editar usuário  </h4><br>
                 <div id="div-msg" style="display: none" id="success" class="col-4 mb-3 mx-auto p-2">
                     <div id="alert-msg" class="alert alert-success text-center" role="alert">
                         <strong id="text-msg"> Protocolo cadastrado com sucesso!</strong>
@@ -25,43 +26,53 @@
 
                         <div class="col-4 mb-3">
                             <label for="exampleInputEmail1" class="form-label">Nome:</label>
-                            <input id="nome" required type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">        
+                            <input disabled value="{{$user->funcionarioModel->nome}}" id="nome" required type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">        
                             
                         </div>
                         <div class="col-4 mb-3">
                             <label for="exampleInputEmail1" class="form-label">Usuário:</label>
-                            <input id="usuario" required type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">        
+                            <input disabled value="{{$user->name}}" id="usuario" required type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">        
                             
                         </div>
                         <div class="col-4 mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email:</label>
-                            <input id="email" required type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">        
+                            <input disabled value="{{$user->email}}" id="email" required type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">        
                             
                         </div>
-                        <div class="col-6 mb-3">
+                        <div class="col-4 mb-3">
                             <label for="exampleInputEmail1" class="form-label">Função:</label>
-                            <select id="funcao" class="form-select" aria-label="Default select example">
-                                <option selected>Selecione uma função</option>
-                                @foreach ($funcoes as $funcao )
-                                    <option value="{{$funcao->id}}">{{$funcao->desc}}</option>
-                                @endforeach
+                            <select disabled id="funcao" class="form-select" aria-label="Default select example">
+                                <option selected>{{$user->funcionarioModel->funcaoModel->desc}}</option>
+                                
                               </select>
                         </div>
 
-                        <div class="col-6 mb-3">
+                        <div class="col-4 mb-3">
                             <label for="exampleInputEmail1" class="form-label">Tipo de usuário:</label>
-                            <select id="tipo" class="form-select" aria-label="Default select example">
-                                <option selected>Selecione um tipo de usuário</option>
-                                @foreach ($tipos as $tipo)
-                                    
-                                <option value="{{$tipo->id}}">{{$tipo->label}}</option>
+                            <select disabled id="tipo" class="form-select" aria-label="Default select example">
+                                @foreach ($user as $users)
+                                    <option >{{$user->rolesModel->roleModel->label}}</option>
                                 @endforeach
+                               
+                                
+                              </select>
+                            
+                        </div>
+                        <div class="col-4 mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Situação:</label>
+                            <select id="situacao" disabled id="tipo" class="form-select" aria-label="Default select example">
+                                @if ($user->funcionarioModel->ativo == 1)
+                                    <option selected>Ativo</option>
+                                @else
+                                    <option selected>Inativo</option>
+                                @endif
+                               
                                 
                               </select>
                             
                         </div>
                         <div class="col-12 mb-3 d-flex justify-content-end">
-                            <button id="cadastrar" class="btn btn-primary">Cadastrar</button>
+                            <button id="editar" class="btn btn-primary">Editar</button>
                         </div>
 
 
@@ -72,5 +83,5 @@
         </div>
     </div>
     <script src="{{asset('assets/js/jquery.js')}}"></script>
-    <script src="{{asset('assets/js/usuario/create.js')}}"></script>
+    <script src="{{asset('assets/js/usuario/index.js')}}"></script>
 @endsection

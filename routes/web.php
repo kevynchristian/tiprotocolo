@@ -82,5 +82,7 @@ Route::middleware('autenticador')->group(function(){
     Route::prefix('/usuarios')->group(function(){
         Route::get('/create', [UserController::class, 'create'])->name('user.create');
         Route::post('/store', [UserController::class, 'store'])->name('user.store');
+        Route::get('/index', [UserController::class, 'index'])->name('user.index');
+        Route::get('/show/{id}', [UserController::class, 'show'])->name('user.show');
     });
 });

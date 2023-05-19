@@ -45,4 +45,7 @@ class User extends Authenticatable
     public function rolesModel(){
         return $this->hasOne(RoleUser::class, 'user_id', 'id');
     }
+    public function funcionarioModel(){
+        return $this->hasOne(Funcionario::class, 'id', 'funcionario');
+    }
 }

@@ -38,7 +38,7 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
-    <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+    <link id="pagestyle" href="{{asset('../assets/css/argon-dashboard.css?v=2.0.4')}}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
@@ -157,12 +157,30 @@
                 </a>
             </li>
             @if(Gate::allows('protocolo'))
-                <li class="nav-item">
-                    <a class="nav-link " href="{{route('user.create')}}">
-
-                        <span class="nav-link-text ms-1">Usuários</span>
-                    </a>
-                </li>
+                <li class="nav-item ms-3">
+                    <div class="accordion accordion-flush" id="usuarios">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button style="font-size: 14px" class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapsed-usuarios" aria-expanded="false"
+                                    aria-controls="collapsed-usuarios">
+                                    Usuários
+                                </button>
+                            </h2>
+                            <div id="collapsed-usuarios" class="accordion-collapse collapse"
+                                data-bs-parent="#usuarios">
+                                <div class="accordion-body">
+                                    <div style="color: black" class="list-group">
+                                        <a href="{{ route('user.create') }}"
+                                            class="list-group-item list-group-item-action">Cadastrar usuários</a>
+                                        <a href="{{ route('user.index') }}"
+                                            class="list-group-item list-group-item-action">Ver todos</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
             @endif
     </aside>
     <main class="main-content position-relative border-radius-lg ">

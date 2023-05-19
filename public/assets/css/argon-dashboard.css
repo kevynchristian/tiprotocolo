@@ -5189,7 +5189,6 @@ fieldset:disabled .btn {
 .card-body {
   flex: 1 1 auto;
   padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
-  color: var(--bs-card-color);
 }
 
 .card-title {
@@ -10576,9 +10575,6 @@ fieldset:disabled .btn {
   background-color: #fff !important;
 }
 
-.bg-transparent {
-  background-color: transparent !important;
-}
 
 .bg-gray-100 {
   background-color: #f8f9fa !important;

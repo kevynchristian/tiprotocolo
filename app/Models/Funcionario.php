@@ -16,9 +16,14 @@ class Funcionario extends Model {
         return $this->hasOne(Funcao::class, 'id', 'funcao');
     }
     public function protocoloTombamentoModel() {
-        return $this->hasMany(ProtocoloTombamento::class, 'id', 'id_responsavel');
+        return $this->hasMany(ProtocoloTombamento::class, 'id_responsavel', 'id');
     }
-
+    public function atendimentosInternosModel(){
+        return $this->hasMany(AtendimentoInterno::class, 'funcionario', 'id');
+    }
+    public function atendimentosEscolasModel(){
+        return $this->hasMany(AtendimentoEscola::class, 'funcionario_fez', 'id');
+    }
     public function atendimentosInternos($ano = 0) {
         if( $ano == 0 ){
             return AtendimentoInterno::where('funcionario' , '=' , $this->id)

@@ -18,7 +18,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $funcionarios = Funcionario::all();
+        return view('user.index', compact('funcionarios'));
     }
 
     /**
@@ -63,9 +64,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $user = User::where('funcionario', $id)->first();
+        return view('user.edit', compact('user'));
     }
 
     /**
