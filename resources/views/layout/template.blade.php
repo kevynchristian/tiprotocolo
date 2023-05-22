@@ -102,7 +102,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="../pages/virtual-reality.html">
+                <a class="nav-link " href="{{route('interno.create')}}">
 
                     <span class="nav-link-text ms-1">Atendimento Interno</span>
                 </a>
@@ -145,7 +145,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="../pages/sign-up.html">
+                <a class="nav-link " href="{{route('escolas.index')}}">
 
                     <span class="nav-link-text ms-1">Escolas</span>
                 </a>

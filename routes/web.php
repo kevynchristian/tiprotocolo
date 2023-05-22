@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AtendimentoInternoController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EscolaController;
 use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\InservivelController;
@@ -50,7 +52,10 @@ Route::middleware('autenticador')->group(function(){
         Route::delete('/destroy/{id}', [ProtocoloTombamentoController::class, 'destroy']);
         Route::get('/pdf/{id}', [ProtocoloTombamentoController::class, 'pdf']);
     });
-
+    Route::prefix('/atendimento-interno')->group(function(){
+        Route::get('/create', [AtendimentoInternoController::class, 'create'])->name('interno.create');
+        Route::post('/store', [AtendimentoInternoController::class, 'store'])->name('interno.store');
+    });
     Route::prefix('/estante')->group(function(){
         Route::get('/index', [EstanteController::class, 'index'])->name('estante.index');
         Route::get('/equipamentos', [EstanteController::class, 'status'])->name('estante.equipamentos');
@@ -84,5 +89,11 @@ Route::middleware('autenticador')->group(function(){
         Route::post('/store', [UserController::class, 'store'])->name('user.store');
         Route::get('/index', [UserController::class, 'index'])->name('user.index');
         Route::get('/show/{id}', [UserController::class, 'show'])->name('user.show');
+        Route::post('/update/{id}', [UserController::class, 'update'])->name('user.update');
+    });
+    Route::prefix('/escolas')->group(function(){
+        Route::get('/index', [EscolaController::class, 'index'])->name('escolas.index');
+        Route::get('/show/{id}', [EscolaController::class, 'show'])->name('escolas.show');
+        Route::post('/update', [EscolaController::class, 'update'])->name('escolas.update');
     });
 });

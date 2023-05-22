@@ -66,8 +66,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $funcoes = Funcao::all();
         $user = User::where('funcionario', $id)->first();
-        return view('user.edit', compact('user'));
+        $roles = Role::all();
+        return view('user.edit', compact('user', 'roles', 'funcoes'));
     }
 
     /**
@@ -83,7 +85,26 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+
+            $user = User::find($id);
+            $user->update([
+                'name' => $request->usuario,
+                'email' => $request->email,
+            ]);
+            $user->funcionarioModel->update([
+                'nome' => $request->nome,
+                'funcao' => $request->funcao,
+                'ativo' => $request->situacao
+            ]);
+            $user->rolesModel->update([
+                'role_id' => $request->tipo
+            ]);
+            return 1;
+        }catch(Exception $ex){
+            return 0;
+            
+        }
     }
 
     /**

@@ -60,8 +60,8 @@
                     {{session('msg')}}
                   </div>
                 @endif
-                <div class="card-header pb-0 text-start">
-                    <img class="img-fluid" style=" margin-left: 90px" width="180px" src="{{URL::asset('/assets/img/sme.png')}}" alt="">
+                <div class="card-header pb-0 text-start mx-auto">
+                    <img class="img-fluid"  width="180px" src="{{URL::asset('/assets/img/sme.png')}}" alt="">
                 </div>
                 <div class="card-body">
                   <form role="form" action="{{route('login.store')}}" method="POST">
