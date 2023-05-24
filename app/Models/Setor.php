@@ -14,4 +14,7 @@ class Setor extends Model
     public function protocoloModel(){
         return $this->belongsTo(Protocolo::class, 'id_setor', 'setor_interno');
     }
+    public function atendimentoInternoModel(){
+        return $this->belongsTo(AtendimentoInterno::class, 'id_setor', 'setor');
+    }
 }

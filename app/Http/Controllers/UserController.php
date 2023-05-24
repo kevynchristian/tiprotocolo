@@ -83,27 +83,41 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
+    public function update(Request $request, string $id){
         try {
 
             $user = User::find($id);
-            $user->update([
-                'name' => $request->usuario,
-                'email' => $request->email,
-            ]);
-            $user->funcionarioModel->update([
-                'nome' => $request->nome,
-                'funcao' => $request->funcao,
-                'ativo' => $request->situacao
-            ]);
-            $user->rolesModel->update([
-                'role_id' => $request->tipo
-            ]);
-            return 1;
-        }catch(Exception $ex){
+            if ($request->email == $user->email) {
+                $user->update([
+                    'name' => $request->usuario,
+                ]);
+                $user->funcionarioModel->update([
+                    'nome' => $request->nome,
+                    'funcao' => $request->funcao,
+                    'ativo' => $request->situacao
+                ]);
+                $user->rolesModel->update([
+                    'role_id' => $request->tipo
+                ]);
+                return 1;
+            } else {
+
+                $user->update([
+                    'name' => $request->usuario,
+                    'email' => $request->email,
+                ]);
+                $user->funcionarioModel->update([
+                    'nome' => $request->nome,
+                    'funcao' => $request->funcao,
+                    'ativo' => $request->situacao
+                ]);
+                $user->rolesModel->update([
+                    'role_id' => $request->tipo
+                ]);
+                return 1;
+            }
+        } catch (Exception $ex) {
             return 0;
-            
         }
     }
 

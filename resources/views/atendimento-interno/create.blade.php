@@ -11,7 +11,7 @@
       <div class="card mb-4 card-1">
           <h4 class="mt-3 text-center">Cadastrar Atendimento Interno  </h4>
           @if (session()->has('msg'))
-            <div class="col-12 mb-3 mx-auto p-2">
+            <div class="col-10 mb-3 mx-auto p-2">
               <div class="alert alert-success text-center" role="alert">
                 <strong>{{session('msg')}}</strong>
               </div>
@@ -33,7 +33,7 @@
                   @csrf
                   <div class="col mb-3">
                       <label for="disabledTextInput" class="form-label">Técnico *</label>
-                      <select name="funcionario" id="origem" class="form-select" aria-label="Default select example">
+                      <select required name="funcionario" id="origem" class="form-select" aria-label="Default select example">
                           <option value="0" selected>Selecione um Técnico</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{$funcionario->id}}">{{$funcionario->nome}}</option>
@@ -43,7 +43,7 @@
 
                   <div id="setor" class="col-12 mb-3">
                       <label for="disabledTextInput" class="form-label">Setor:</label>
-                      <select name="setor" id="selectSetor" class="form-select" aria-label="Default select example">
+                      <select required name="setor" id="selectSetor" class="form-select" aria-label="Default select example">
                         <option value="0" selected>Selecione um setor</option>
                         @foreach ($setores as $setor)
                             <option value="{{$setor->id_setor}}">{{$setor->setor}}</option>
@@ -53,17 +53,17 @@
 
                   <div class="col-12 mb-3">
                       <label for="disabledTextInput" class="form-label">Data:</label>
-                      <input name="data" id="data" type="date" class="form-control">
+                      <input required name="data" id="data" type="date" class="form-control">
                   </div>
                   <div class="col-12 mb-3">
                     <div class="form-floating">
-                      <textarea name="problema" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                      <label for="floatingTextarea">Problema</label>
+                      <textarea required name="problema" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                      <label  for="floatingTextarea">Problema</label>
                     </div>
                   </div>
                   <div class="col-12 mb-3">
                     <div class="form-floating">
-                      <textarea name="solucao" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                      <textarea required name="solucao" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                       <label  for="floatingTextarea">Solução</label>
                     </div>
                   </div>

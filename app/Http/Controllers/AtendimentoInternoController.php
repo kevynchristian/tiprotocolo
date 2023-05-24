@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AtendimentoInterno;
 use App\Models\Funcionario;
 use App\Models\Setor;
+use Exception;
 use Illuminate\Http\Request;
 
 class AtendimentoInternoController extends Controller
@@ -14,7 +15,9 @@ class AtendimentoInternoController extends Controller
      */
     public function index()
     {
-        //
+        $setores = Setor::where('ativo', true)->orderBy('setor', 'asc')->get();
+        $atendimentos = AtendimentoInterno::with('funcionarioModel')->whereYear('data', '2023')->orderBy('id', 'desc')->simplePaginate(5);
+        return view('atendimento-interno.index', compact('atendimentos', 'setores'));
     }
 
     /**
@@ -38,7 +41,7 @@ class AtendimentoInternoController extends Controller
         $solucao = $request->solucao;
 
         AtendimentoInterno::create($request->all());
-        return redirect()->back()->with('msg', 'Atedimento Interno cadastrado com sucesso!');
+        return redirect()->back()->with('msg', 'Atedimento Interno cadastrado com sucesso!');   
     }
 
     /**
@@ -46,7 +49,11 @@ class AtendimentoInternoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $atendimento = AtendimentoInterno::find($id);
+        $atendimento->funcionario = $atendimento->funcionarioModel->nome;
+        $atendimento->setor = $atendimento->setorModel->setor;
+        $atendimento->data = date('d/m/Y', strtotime($atendimento->data));
+        return $atendimento;
     }
 
     /**
@@ -54,7 +61,10 @@ class AtendimentoInternoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $atendimentoPorId = AtendimentoInterno::find($id);
+        $setores = Setor::where('ativo', true)->orderBy('setor', 'asc')->get();
+        $tecnicos = Funcionario::whereIn('funcao', [2,4,5,6])->where('ativo', 1)->get();
+        return view('atendimento-interno.edit', compact('atendimentoPorId', 'tecnicos', 'setores'));
     }
 
     /**
@@ -62,7 +72,13 @@ class AtendimentoInternoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $atendimento = AtendimentoInterno::find($id);
+        try{
+            $atendimento->update($request->all());
+            return redirect()->back()->with('msgSuccess', 'Atendimento editado: '. $atendimento->id);
+        }catch(Exception $ex){
+            return redirect()->back()->with('msgError', 'Erro ao editar atendimento: '. $atendimento->id);
+        }
     }
 
     /**
@@ -70,6 +86,30 @@ class AtendimentoInternoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $atendimento = AtendimentoInterno::find($id);
+        try{
+            $atendimento->delete();
+            $atendimento->error = 1;
+            return $atendimento;
+        }catch(Exception $ex){  
+            $atendimento->error = 0;
+            return $atendimento;
+        }
+    }
+    
+    public function filtros(Request $request){
+
+        if($request->ano == 0){
+            $atendimentos = AtendimentoInterno::whereSetor($request->setor)->orderBy('created_at', 'desc')->get();
+            return view('atendimento-interno.table-atendimento', compact('atendimentos'));
+        }
+        if($request->setor == 0){
+            $atendimentos = AtendimentoInterno::whereYear('created_at', $request->ano)->orderBy('created_at', 'desc')->get();
+            return view('atendimento-interno.table-atendimento', compact('atendimentos'));
+        }
+        
+        $atendimentos = AtendimentoInterno::whereYear('created_at', $request->ano)->orderBy('created_at', 'desc')->whereSetor($request->setor)->get();
+        
+        return view('atendimento-interno.table-atendimento', compact('atendimentos'));
     }
 }

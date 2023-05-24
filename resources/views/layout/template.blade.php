@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 
-<body class="g-sidenav-show   bg-gray-100">
+<body id="body" class="g-sidenav-show   bg-gray-100 ">
     <div class="min-height-300 bg-primary position-absolute w-100"></div>
 
     <aside
@@ -51,6 +51,7 @@
         <div style="height: 100px" class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                 aria-hidden="true" id="iconSidenav"></i>
+                <i id="fechar" style="cursor: pointer" class="bi bi-x-lg ms-11 mt-3"></i>
             <a style="300px;" class="navbar-brand m-0"
                 href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
                 <img style="margin-left: 70px; margin-top:30px; width: 50px; height:40px"
@@ -60,7 +61,6 @@
                 </span>
             </a>
         </div>
-
         <br><br>
         <hr class="horizontal dark mt-0">
         <ul class="navbar-nav">
@@ -101,11 +101,29 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link " href="{{route('interno.create')}}">
-
-                    <span class="nav-link-text ms-1">Atendimento Interno</span>
-                </a>
+            <li class="nav-item ms-3">
+                <div class="accordion accordion-flush" id="inservivel">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button style="font-size: 14px" class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapsed-internos" aria-expanded="false"
+                                aria-controls="collapsed-internos">
+                               Atendimentos Internos
+                            </button>
+                        </h2>
+                        <div id="collapsed-internos" class="accordion-collapse collapse"
+                            data-bs-parent="#internos">
+                            <div class="accordion-body">
+                                <div style="color: black" class="list-group">
+                                    <a href="{{ route('interno.create') }}"
+                                        class="list-group-item list-group-item-action">Cadastrar</a>
+                                    <a href="{{ route('interno.index') }}"
+                                        class="list-group-item list-group-item-action">Ver todos</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link " href="{{ route('estante.index') }}">
@@ -204,14 +222,15 @@
                             </a>
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
-                                <div class="sidenav-toggler-inner">
+                            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav ">
+                                <div class="sidenav-toggler-inner menu">
                                     <i class="sidenav-toggler-line bg-white"></i>
                                     <i class="sidenav-toggler-line bg-white"></i>
                                     <i class="sidenav-toggler-line bg-white"></i>
                                 </div>
                             </a>
                         </li>
+
                         <li class="nav-item px-3 d-flex align-items-center ">
                             <a href="{{ route('logout', Auth::user()->id) }}" class="nav-link text-white p-0">
                                 <i class="bi bi-box-arrow-right"></i>
@@ -238,11 +257,11 @@
 
 
     <!--   Core JS Files   -->
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
-    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <script src="{{asset('../assets/js/core/popper.min.js')}}"></script>
+    <script src="{{asset('../assets/js/core/bootstrap.min.js')}}"></script>
+    <script src="{{asset('../assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
+    <script src="{{asset('../assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
+    <script src="{{asset('../assets/js/plugins/chartjs.min.js')}}"></script>
     <script>
         var ctx1 = document.getElementById("chart-line").getContext("2d");
 
@@ -336,9 +355,11 @@
         }
     </script>
     <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script async defer src="{{asset('https://buttons.github.io/buttons.js')}}"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+    <script src="{{asset('../assets/js/argon-dashboard.min.js?v=2.0.4')}}"></script>
+    <script src="{{asset('/assets/js/jquery.js')}}"></script>
+    <script src="{{asset('/assets/js/template/template.js')}}"></script>
 </body>
 
 </html>

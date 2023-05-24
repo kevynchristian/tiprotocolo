@@ -37,7 +37,7 @@ function update(id) {
                 $('#error').show();
                 $('#alert-msg').removeClass('alert-danger');
                 $('#alert-msg').addClass('alert-success');
-                $('#msg').text('Usuário editado com sucesso');
+                $('#msg').text('Usuário editado com sucesso!');
                 $('#nome').prop('disabled', true);
                 $('#usuario').prop('disabled', true);
                 $('#email').prop('disabled', true);
@@ -50,7 +50,7 @@ function update(id) {
                 $('#error').show();
                 $('#alert-msg').removeClass('alert-success');
                 $('#alert-msg').addClass('alert-danger');
-                $('#msg').text('Usuário editado com sucesso');
+                $('#msg').text('Erro ao editar usuário!');
             }
         }
     });

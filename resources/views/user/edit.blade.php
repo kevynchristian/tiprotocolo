@@ -19,7 +19,7 @@
                 </div>
                 <div class="container off-set">
                     <div class="row align-items-center">
-
+                        
                         <div class="col-4 mb-3">
                             <label for="exampleInputEmail1" class="form-label">Nome:</label>
                             <input disabled value="{{$user->funcionarioModel->nome}}" id="nome" required type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">        
@@ -80,7 +80,7 @@
                         </div>
                         <div class="col-12 mb-3 d-flex justify-content-end">
                             <button id="editar" class="btn btn-primary">Editar</button>
-                            <button onclick="update({{Auth::user()->id}})" style="display: none" id="update" class="btn btn-primary">Editar</button>
+                            <button onclick="update({{ $user->id}})" style="display: none" id="update" class="btn btn-primary">Editar</button>
                         </div>
 
 

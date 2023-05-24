@@ -55,6 +55,12 @@ Route::middleware('autenticador')->group(function(){
     Route::prefix('/atendimento-interno')->group(function(){
         Route::get('/create', [AtendimentoInternoController::class, 'create'])->name('interno.create');
         Route::post('/store', [AtendimentoInternoController::class, 'store'])->name('interno.store');
+        Route::get('/index', [AtendimentoInternoController::class, 'index'])->name('interno.index');
+        Route::get('/show/{id}', [AtendimentoInternoController::class, 'show'])->name('interno.show');
+        Route::get('/edit/{id}', [AtendimentoInternoController::class, 'edit'])->name('interno.edit');
+        Route::post('/update/{id}', [AtendimentoInternoController::class, 'update'])->name('interno.update');
+        Route::delete('/destroy/{id}', [AtendimentoInternoController::class, 'destroy'])->name('interno.destroy');
+        Route::get('/filtros', [AtendimentoInternoController::class, 'filtros'])->name('interno.filtros');
     });
     Route::prefix('/estante')->group(function(){
         Route::get('/index', [EstanteController::class, 'index'])->name('estante.index');

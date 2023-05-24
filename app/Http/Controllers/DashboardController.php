@@ -19,8 +19,11 @@ class DashboardController extends Controller
         $atendimentoEscola = AtendimentoEscola::all()->count();
         $atendimentoInterno = AtendimentoInterno::all()->count();
         $laudoInserviveis = Inservivel::all()->count();
+        $atendimentoInternoMes = AtendimentoInterno::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
+        $atendimentoEscolaMes = AtendimentoEscola::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
+        $consertos = ProtocoloTombamento::where('status', 3)->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
         $protocolo = ProtocoloTombamento::where('status', 3)->count();
-        return view('dashboard.dashboard', compact('atendimentoEscola', 'atendimentoInterno', 'laudoInserviveis', 'protocolo'));
+        return view('dashboard.dashboard', compact('atendimentoEscola', 'atendimentoInterno', 'laudoInserviveis', 'protocolo','atendimentoInternoMes', 'atendimentoEscolaMes', 'consertos'));
     }
 
     /**

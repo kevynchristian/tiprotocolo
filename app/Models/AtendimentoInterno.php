@@ -27,7 +27,7 @@ class AtendimentoInterno extends Model
     ];
     
     public function setorModel(){
-        return $this->belongsTo(Setor::class,'setor','id_setor');
+        return $this->hasOne(Setor::class,'id_setor','setor');
     }
     public function funcionarioModel(){
         return $this->belongsTo(Funcionario::class,'funcionario','id');
