@@ -1,5 +1,18 @@
 @extends('layout.template')
 @section('content')
+<style>
+    @keyframes animacao {
+        from {width: 0px;}
+        to {width: 400px}
+    }
+
+    .img-logo {
+        animation-name: animacao;
+        animation-duration: 5s;
+        animation-iteration-count: 1;
+    }
+
+</style>
 <div class="container-fluid py-4">
     <div class="row">
       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -120,10 +133,10 @@
                 <div style="height: 20px" class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                   <div class="progress-bar" style="width: {{$consertos}}%"></div>
                 </div><br>
-                
+
             </div>
             <div class="col-6 mx-auto mt-8">
-                <img class="img-fluid" src="{{asset('assets/img/logo-seduc.jpeg')}}" alt="">
+                <img class="img-fluid img-logo" src="{{asset('assets/img/logo-seduc.jpeg')}}" alt="">
             </div>
           </div>
           <div class="card-body p-3">
@@ -144,7 +157,7 @@
                 <div class="col-10 mt-5 ms-4">
                     Em aberto: <strong>{{$emAberto}}</strong>
                       <div style="height: 20px" class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" style="width: {{$emAberto}}%"></div>
+                        <div id="progress-aberto" class="progress-bar" style="width: {{$emAberto}}%"></div>
                       </div><br>
                     Em andamento: <strong>{{ $emAndamento}}</strong>
                     <div style="height: 20px" class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -167,10 +180,10 @@
                       <div class="progress-bar" style="width: {{$inservivelcomLaudo}}%"></div>
                     </div>
                 </div>
-               
+
                 </div>
               </div>
-             
+
             </div>
             <button class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -183,7 +196,7 @@
           </div>
         </div>
       </div>
-  
+
       <footer class="footer pt-3  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
@@ -191,12 +204,12 @@
               <div class="copyright text-center text-sm text-muted text-lg-start">
                 2023 -
                 Sistema de controle de Protocolos do setor de Tecnologia da Informação - <br> <strong>Secretaria de Educação.</strong>
-                
+
               </div>
             </div>
             <div class="col-lg-6">
               <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                
+
                 <li class="nav-item">
                   <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank">Versão 2.0</a>
                 </li>

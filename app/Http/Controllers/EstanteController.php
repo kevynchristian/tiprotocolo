@@ -14,19 +14,22 @@ class EstanteController extends Controller
      */
     public function index(Request $request)
     {
+        $aberto = ProtocoloTombamento::where('status', 1)->whereYear('created_at', date('Y'))->count();
+        $andamento = ProtocoloTombamento::where('status', 2)->whereYear('created_at', date('Y'))->count();
+        $saida = ProtocoloTombamento::where('status', 3)->whereYear('created_at', date('Y'))->count();
         $status = $request->id;
         if (!empty($request->status)) {
             $protocolos = ProtocoloTombamento::whereStatus($request->status)->whereYear('created_at', 2023)->orderBy('prioridade', 'desc')->get();
             $funcionarios = Funcionario::whereIn('funcao', [2, 4, 5])->where(['ativo' => 1])
                 ->orderBy('nome', 'asc')
                 ->get();
-            return view('estante.equipamentos', compact('protocolos', 'funcionarios'));
+            return view('estante.equipamentos', compact('protocolos', 'funcionarios', 'aberto', 'andamento', 'saida'));
         } else {
             $protocolos = ProtocoloTombamento::whereStatus(1)->whereYear('created_at', 2023)->orderBy('prioridade', 'desc')->get();
             $funcionarios = Funcionario::whereIn('funcao', [2, 4, 5])->where(['ativo' => 1])
                 ->orderBy('nome', 'asc')
                 ->get();
-            return view('estante.index', compact('protocolos', 'funcionarios'));
+            return view('estante.index', compact('protocolos', 'funcionarios', 'aberto', 'andamento', 'saida'));
         }
     }
     /**

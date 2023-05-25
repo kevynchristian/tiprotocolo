@@ -52,12 +52,10 @@
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                 aria-hidden="true" id="iconSidenav"></i>
                 <i id="fechar" style="cursor: pointer" class="bi bi-x-lg ms-11 mt-3"></i>
-            <a style="300px;" class="navbar-brand m-0"
-                href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-                <img style="margin-left: 70px; margin-top:30px; width: 50px; height:40px"
-                    src="{{ URL::asset('/assets/img/sme.png ') }}" class="" alt="main_logo"><br>
-                <span style="margin-left:30px" class="ms-1 font-weight-bold">
-                    <h6 style="position: relative; left: 50px">ProtocolosTI</h6>
+                <span style="margin-left:70px; margin-top: 200px" class=" font-weight-bold">
+                    <a href="">
+                        ProtocolosTI
+                    </a>
                 </span>
             </a>
         </div>
@@ -198,7 +196,7 @@
                             </div>
                         </div>
                     </div>
-                
+
             @endif
     </aside>
     <main class="main-content position-relative border-radius-lg ">
