@@ -6,6 +6,7 @@ use App\Models\AtendimentoEscola;
 use App\Models\AtendimentoInterno;
 use App\Models\Inservivel;
 use App\Models\ProtocoloTombamento;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -23,7 +24,16 @@ class DashboardController extends Controller
         $atendimentoEscolaMes = AtendimentoEscola::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
         $consertos = ProtocoloTombamento::where('status', 3)->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
         $protocolo = ProtocoloTombamento::where('status', 3)->count();
-        return view('dashboard.dashboard', compact('atendimentoEscola', 'atendimentoInterno', 'laudoInserviveis', 'protocolo','atendimentoInternoMes', 'atendimentoEscolaMes', 'consertos'));
+        $emAberto = ProtocoloTombamento::where('status', 1)->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
+        $emAndamento = ProtocoloTombamento::where('status', 2)->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
+        $concluido = ProtocoloTombamento::where('status', 3)->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
+        $finalizado = ProtocoloTombamento::where('status', 4)->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
+        $inservivelSemLaudo = ProtocoloTombamento::where('status', 5)->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
+        $inservivelcomLaudo = ProtocoloTombamento::where('status', 6)->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
+        $date = Carbon::parse(date('Y'))->locale('pt-BR');
+        $mesAtual = $date->translatedFormat('F');
+        return view('dashboard.dashboard', compact('atendimentoEscola', 'atendimentoInterno', 'laudoInserviveis', 'protocolo',
+        'atendimentoInternoMes', 'atendimentoEscolaMes', 'consertos', 'emAberto', 'emAndamento', 'concluido', 'finalizado', 'inservivelSemLaudo', 'inservivelcomLaudo', 'mesAtual'));
     }
 
     /**

@@ -71,7 +71,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="../pages/tables.html">
+                <a class="nav-link " href="{{route('atendimento-escola.index')}}">
 
                     <span class="nav-link-text ms-1">Atendimento as Escolas</span>
                 </a>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AtendimentoEscolasController;
 use App\Http\Controllers\AtendimentoInternoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EscolaController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\ProtocoloEntrada;
 use App\Http\Controllers\ProtocoloEntradaController;
 use App\Http\Controllers\ProtocoloTombamentoController;
 use App\Http\Controllers\UserController;
+use App\Models\AtendimentoEscola;
 use App\Models\Inservivel;
 use App\Models\ProtocoloTombamento;
 use App\Models\Role;
@@ -36,7 +38,9 @@ Route::middleware('autenticador')->group(function(){
     Route::prefix('/dashboard')->group(function(){
         Route::get('/index', [DashboardController::class, 'index'])->name('dashboard');
     });
-
+    Route::prefix('/atendimento-escola')->group(function(){
+        Route::get('/index', [AtendimentoEscolasController::class, 'index'])->name('atendimento-escola.index');
+    });
     Route::prefix('/protocolo')->group(function(){
         Route::get('/create', [ProtocoloEntradaController::class, 'create'])->name('protocolo.create');
         Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
