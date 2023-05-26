@@ -5,6 +5,7 @@ use App\Http\Controllers\AtendimentoInternoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EscolaController;
 use App\Http\Controllers\EstanteController;
+use App\Http\Controllers\GraficosController;
 use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\InservivelController;
 use App\Http\Controllers\ProtocoloEntrada;
@@ -40,7 +41,13 @@ Route::middleware('autenticador')->group(function(){
     });
     Route::prefix('/atendimento-escola')->group(function(){
         Route::get('/index', [AtendimentoEscolasController::class, 'index'])->name('atendimento-escola.index');
+        Route::get('/events', [AtendimentoEscolasController::class, 'events'])->name('atendimento-escola.events');
+        Route::get('/store', [AtendimentoEscolasController::class, 'store'])->name('atendimento-escola.store');
+        Route::get('/show/{id}', [AtendimentoEscolasController::class, 'show'])->name('atendimento-escola.show');
+        Route::post('/finalizar/{id}', [AtendimentoEscolasController::class, 'finalizar'])->name('atendimento-escola.finalizar');
+        Route::delete('/destroy/{id}', [AtendimentoEscolasController::class, 'destroy'])->name('atendimento-escola.destroy');
     });
+    
     Route::prefix('/protocolo')->group(function(){
         Route::get('/create', [ProtocoloEntradaController::class, 'create'])->name('protocolo.create');
         Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
@@ -105,5 +112,9 @@ Route::middleware('autenticador')->group(function(){
         Route::get('/index', [EscolaController::class, 'index'])->name('escolas.index');
         Route::get('/show/{id}', [EscolaController::class, 'show'])->name('escolas.show');
         Route::post('/update', [EscolaController::class, 'update'])->name('escolas.update');
+    });
+    Route::prefix('/graficos')->group(function(){
+        Route::get('/index', [GraficosController::class, 'index'])->name('graficos.index');
+        Route::post('/store', [GraficosController::class, 'store'])->name('graficos.store');
     });
 });

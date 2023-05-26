@@ -8,7 +8,7 @@
 
     .img-logo {
         animation-name: animacao;
-        animation-duration: 5s;
+        animation-duration: 4s;
         animation-iteration-count: 1;
     }
 
