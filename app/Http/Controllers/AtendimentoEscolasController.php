@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AtendimentoEscola;
 use App\Models\Escola;
 use App\Models\Funcionario;
+use App\Models\Problema;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,7 +66,15 @@ class AtendimentoEscolasController extends Controller
             'escola' => $request->escola,
             'solucao' => ''
         ]);
-    }
+        for($i = 0; $i < $request->lista; $i++){
+            Problema::create([
+                'feito' => 0,
+                'tomb_escola_id' => $atendimento->escola,
+                'evento_id' => $atendimento->id,
+                'desc' => $request->valorLista[$i],
+            ]);
+        }
+        }
 
     /**
      * Display the specified resource.
@@ -76,7 +85,7 @@ class AtendimentoEscolasController extends Controller
     }
     public function show(string $id)
     {
-        $atendimento = AtendimentoEscola::find($id);
+        $atendimento = AtendimentoEscola::with('problemaModel')->where('id', $id)->get();
         return [ 0 => $atendimento, 1 => 1];
     }
 

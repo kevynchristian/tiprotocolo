@@ -18,5 +18,7 @@ class AtendimentoEscola extends Model
     public function countProblemas(){
         return Problema::where('evento_id', '=', $this->id)->count();
     }
-    
+    public function problemaModel(){
+        return $this->hasMany(Problema::class, 'evento_id', 'id');
+    }
 }

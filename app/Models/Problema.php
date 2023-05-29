@@ -8,4 +8,7 @@ class Problema extends Model
 {
     protected $table = 'problemas';
     protected $guarded = [];
+    public function escolaModel(){
+        return $this->hasOne(AtendimentoEscola::class, 'id', 'evento_id');
+    }
 }

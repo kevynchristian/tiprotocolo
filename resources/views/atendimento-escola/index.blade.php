@@ -16,6 +16,9 @@
             margin: 0 auto;
             margin-top: 300px;
         }
+        .lista {
+            background-color: aliceblue
+        }
     </style>
     </head>
 
@@ -74,7 +77,7 @@
                             <div class="row">
                                 <div class="col">
                                     <ul id="lista-problema" class="list-group">
-
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -116,7 +119,6 @@
                                 <div class="col">
                                     <strong>Técnico responsável: </strong>
                                     <select id="tecnico" class="form-select" aria-label="Default select example">
-                                        <option selected>Selecione um funcionário</option>
                                         @foreach ($funcionarios as $funcionario)
                                             <option value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
                                         @endforeach
@@ -144,7 +146,8 @@
                             <div class="row">
                                 <div class="col">
                                     <strong>Problema:</strong>
-                                    <input id="problema" type="text" class="form-control">
+                                    <ul id="problema-listagem" class="list-group">
+                                    </ul>
                                 </div>
                             </div><br>
                             <div class="row">

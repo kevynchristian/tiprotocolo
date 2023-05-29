@@ -35,10 +35,11 @@
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 </head>
 <style>
-
+  body {
+    background-color: #576879;
+  }
 </style>
 <body class="">
-
   <div class="container position-sticky z-index-sticky top-0">
     <div class="row">
       <div class="col-12">
@@ -60,9 +61,10 @@
                     {{session('msg')}}
                   </div>
                 @endif
-                <div class="card-header pb-0 text-start mx-auto">
-                    <img class="img-fluid"  width="180px" src="{{URL::asset('/assets/img/sme.png')}}" alt="">
-                </div>
+                <div style="background-color: white; height:400px; border-radius: 20px">
+                  <div class="col text-center mt-4" style="font-size: 40px">
+                     ProtocolosTI
+                   </div>
                 <div class="card-body">
                   <form role="form" action="{{route('login.store')}}" method="POST">
                     @csrf
@@ -75,6 +77,7 @@
                     <div class="form-check form-switch">
                       {{-- <input class="form-check-input" type="checkbox" id="rememberMe"> --}}
                     </div>
+                    
                     <div class="text-center">
                       <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Entrar</button>
                     </div>
@@ -84,6 +87,7 @@
                   <p class="mb-4 text-sm mx-auto">
                   </p>
                 </div>
+              </div>
               </div>
             </div>
             <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
