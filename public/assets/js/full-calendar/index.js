@@ -2,13 +2,13 @@ let _token = $('#_token').val();
 $(document).ready(function(){
     $('#criar').click(() => {
         criar();
+
     })
     $('#finalizar').click(() => {
-       finalizar(); 
+       finalizar();
     });
     $('#add-problema').click(() => {
         let problema = $('#problema').val();
-        
     })
 })
 document.addEventListener('DOMContentLoaded', function() {
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
       navLinks: true, // can click day/week names to navigate views
       editable: true,
         locale: 'pt-br',
-        events: { url: '/atendimento-escola/events'},   
+        events: { url: '/atendimento-escola/events'},
         dateClick: function (date, jsEvent, view) {
             $('#criar-evento').modal('show');
         },
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
           }
-        
+
     });
 
     calendar.render();
@@ -63,6 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
         data: dados,
         success: function(dados){
             console.log(dados);
+            $('#criar-evento').modal('hide');
+            let listaProblema = $('#lista-problema');
+            listaProblema.empty();
         }
     })
 }
@@ -81,4 +84,21 @@ function finalizar() {
         success: function(){
         }
     })
+}
+//preciso de dois elemtento o botao para clicar e o elemento de input que preciso
+
+let problema = $('#problema');
+let addProblema = $('#add-problema');
+let listaProblema = $('#lista-problema');
+addProblema.click(function(){
+    let valorProblema = problema.val();
+    console.log(valorProblema);
+    if(valorProblema != ''){
+        listaProblema.append(`<li class="list-group-item">${valorProblema}</li>`)
+    }
+    problema.val('');
+})
+
+if($('#criar-evento').modal('hide')){
+    console.log('teste');
 }
