@@ -85,7 +85,8 @@ class AtendimentoEscolasController extends Controller
     }
     public function show(string $id)
     {
-        $atendimento = AtendimentoEscola::with('problemaModel')->where('id', $id)->get();
+        $atendimento = AtendimentoEscola::with('problemaModel', 'escolaModel')->where('id', $id)->get();
+
         return [ 0 => $atendimento, 1 => 1];
     }
 
@@ -100,9 +101,18 @@ class AtendimentoEscolasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        dd($request->all());
+        foreach($request->listagemProblema as $problema){
+            $problemaLista = Problema::find($problema);
+            $problemaLista->update([
+                'feito' => 1,
+            ]);
+            $problemaLista->escolaModel->update([
+                'titulo' => $request->escola
+            ]);
+        }
     }
 
     /**

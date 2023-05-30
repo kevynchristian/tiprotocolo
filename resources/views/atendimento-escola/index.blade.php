@@ -17,8 +17,19 @@
             margin-top: 300px;
         }
         .lista {
-            background-color: aliceblue
+            background-color: rgb(247, 247, 247);
+            color: white;
         }
+        .bolinha-verde {
+            background-color: rgb(20, 126, 20);
+            border-radius: 50%;
+            height: 10px;
+            width: 10px;
+            margin-left: 350px;
+            position: relative;
+            top: 15px
+        }
+      
     </style>
     </head>
 
@@ -106,19 +117,20 @@
                                 <div class="col">
                                     <strong>Escola: </strong>
                                     <select id="escola" class="form-select" aria-label="Default select example">
-                                        <option selected>Selecione uma escola</option>
                                         @foreach ($escolas as $escola)
-                                            <option value="{{ $escola->id }}">{{ $escola->escola }}</option>
+                                            <option value="{{$escola->id }}">{{ $escola->escola }}</option>
                                         @endforeach
 
                                     </select>
 
                                 </div>
                             </div><br>
+                            
                             <div class="row">
                                 <div class="col">
                                     <strong>Técnico responsável: </strong>
                                     <select id="tecnico" class="form-select" aria-label="Default select example">
+                                        <option selected>Selecione um funcionário</option>
                                         @foreach ($funcionarios as $funcionario)
                                             <option value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
                                         @endforeach
@@ -164,7 +176,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                         <button type="button" class="btn btn-info">Excluir</button>
-                        <button id="finalizar" type="button" class="btn btn-success">Finalizar</button>
+                        <button id="salvar" type="button" class="btn btn-success">Salvar</button>
+                        <button id="finalizar" type="button" class="btn btn-primary">Finalizar</button>
                     </div>
                 </div>
             </div>

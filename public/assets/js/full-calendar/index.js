@@ -39,7 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         eventClick: function (info) {
             let prioridade = $('#check-prioridade').val();
-            let data = $('#data').val();
+            let data = $('#data2');
+            let tecnico = $('#tecnico');
             let problema = $('#problema').val();
             let id = info.event.id;
             $('#id-atendimento').val(id);
@@ -48,10 +49,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 url: `/atendimento-escola/show/${id}`,
                 type: 'get',
                 success: function (dados) {
-                    console.log(dados[0][0].problema_model);
+                    
+                    $('#escola').val(dados[0][0].escola_model).trigger('change');
+                    data.val(dados[0][0].inicio);
                     for(let i = 0; i < dados[0][0].problema_model.length; i++){
-                        $('#problema-listagem').append(`<li class="list-group-item lista"><input class='form-check-input' type='checkbox' value=' id='flexCheckDefault'><label class='form-check-label' for='flexCheckDefault'>${dados[0][0].problema_model[i].desc}</label></li>`)
+                        if(dados[0][0].problema_model[i].feito == 1){
+                            $('#problema-listagem').append(`<li class="list-group-item lista"><label class='form-check-label' for='flexCheckDefault'><div class="bolinha-verde "></div>${dados[0][0].problema_model[i].desc}
+                            
+                            </label></li>`)
+                        } else {
+                            $('#problema-listagem').append(`<li class="list-group-item lista"><input class='form-check-input' onclick='checkProblema(${dados[0][0].problema_model[i].id})' type='checkbox' value='' id='check-box'><label class='form-check-label teste' for='flexCheckDefault'><div class="bolinha-azul"></div> ${dados[0][0].problema_model[i].desc}</label></li>`)
 
+                        }
                     }
                 }
             })
@@ -61,6 +70,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     calendar.render();
 });
+let listagemProblema = [];
+function checkProblema(id){
+    let escola = $('#escola').val();
+    console.log(escola);
+    listagemProblema.push(id)
+    // $('#salvar').click(() => {
+    //     $.ajax({
+    //         type: "get",
+    //         url: `/atendimento-escola/update`,
+    //         data: {_token, listagemProblema, escola},
+    //         success: function (response) {
+                
+    //         }
+    //     });
+    // })
+}   
+console.log(listagemProblema);
 
 function criar() {
     let dados = {
@@ -99,8 +125,8 @@ function finalizar() {
     })
 }
 //preciso de dois elemtento o botao para clicar e o elemento de input que preciso
-var arrProblema = [];
 
+var arrProblema = [];
 function addProblema(){
     let problema = $('#problema');
     let addProblema = $('#add-problema');
@@ -113,4 +139,3 @@ function addProblema(){
     problema.val('');
     
 }
-

@@ -21,4 +21,10 @@ class AtendimentoEscola extends Model
     public function problemaModel(){
         return $this->hasMany(Problema::class, 'evento_id', 'id');
     }
+    public function userModel(){
+        return $this->hasOne(User::class, 'id', 'funcionario_abriu');
+    }
+    public function escolaModel(){
+        return $this->hasOne(Escola::class, 'id', 'escola');
+    }
 }
