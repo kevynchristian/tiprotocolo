@@ -12,6 +12,11 @@ $(document).ready(function () {
 
         let problema = $('#problema').val();
     })
+    $('#add-problema-modal-2').click(() => {
+        addProblema2();
+
+        let problema = $('#problema-modal-2 ').val();
+    })
     $('#criar-evento').on('hide.bs.modal', function(){
         let listaProblema = $('#lista-problema');
         listaProblema.empty();
@@ -19,6 +24,9 @@ $(document).ready(function () {
     $('#ver-evento').on('hide.bs.modal', function(){
         let ver = $('#problema-listagem');
         ver.empty();
+    })
+     $('#salvar').click(() => {
+        salvar();
     })
 })
 document.addEventListener('DOMContentLoaded', function () {
@@ -49,19 +57,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 url: `/atendimento-escola/show/${id}`,
                 type: 'get',
                 success: function (dados) {
-                    
-                    $('#escola').val(dados[0][0].escola_model).trigger('change');
+                    $('#escola-modal').val(dados[0][0].escola_model.id);
                     data.val(dados[0][0].inicio);
                     for(let i = 0; i < dados[0][0].problema_model.length; i++){
                         if(dados[0][0].problema_model[i].feito == 1){
-                            $('#problema-listagem').append(`<li class="list-group-item lista"><label class='form-check-label' for='flexCheckDefault'><div class="bolinha-verde "></div>${dados[0][0].problema_model[i].desc}
+                            $('#problema-listagem').append(`<li class="list-group-item lista"><label class='form-check-label' for='flexCheckDefault'><div class="bolinha-azul"></div><i style="color:green; font-size:20px" class="bi bi-check"></i> ${dados[0][0].problema_model[i].desc}</label></li>`)
+                        }else {
+                            $('#problema-listagem').append(`<li id="li-${dados[0][0].problema_model[i].id}" class="list-group-item lista">
+                            <div class="row">
+                                <div class="col">
+                                    <input data-status="${dados[0][0].problema_model[i].id}" onclick="checkProblema(${dados[0][0].problema_model[i].id})" class='form-check-input ' type='checkbox' value='${dados[0][0].problema_model[i].id}' id='check-box'><label class='form-check-label' for='flexCheckDefault'><div class="bolinha-azul">
+                                    </div> ${dados[0][0].problema_model[i].desc}
+                                   
+                                    </label>
+                                </div>
+                                <div class="col text-end">
+                                    <i onclick="removerProblema(${dados[0][0].problema_model[i].id})" style="z-index: 100%;  color: red" class="bi bi-trash3 "></i>
+                                </div>
+                            </div>
                             
-                            </label></li>`)
-                        } else {
-                            $('#problema-listagem').append(`<li class="list-group-item lista"><input class='form-check-input' onclick='checkProblema(${dados[0][0].problema_model[i].id})' type='checkbox' value='' id='check-box'><label class='form-check-label teste' for='flexCheckDefault'><div class="bolinha-azul"></div> ${dados[0][0].problema_model[i].desc}</label></li>`)
+                        </li>`)
 
                         }
                     }
+                    
                 }
             })
         }
@@ -72,22 +91,40 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 let listagemProblema = [];
 function checkProblema(id){
-    let escola = $('#escola').val();
-    console.log(escola);
-    listagemProblema.push(id)
-    // $('#salvar').click(() => {
-    //     $.ajax({
-    //         type: "get",
-    //         url: `/atendimento-escola/update`,
-    //         data: {_token, listagemProblema, escola},
-    //         success: function (response) {
-                
-    //         }
-    //     });
-    // })
+    if($('#check-box').is(':checked')){
+        listagemProblema.push(id)
+    }else {
+        listagemProblema.pop(id);
+    }
+    
+    
 }   
-console.log(listagemProblema);
 
+function salvar(){
+    let escola = $('#escola-modal').val();
+    let data = $('#data2').val();
+    let idAtendimento = $('#id-atendimento').val();
+    $.ajax({
+        type: "get",
+        url: `/atendimento-escola/update`,
+        data: {_token, listagemProblema, escola, data, idAtendimento},
+        success: function (response) {
+            listagemProblema = [];
+            $('#ver-evento').modal('hide');
+            location.reload();
+            }
+        });
+}
+function removerProblema(id){
+    $.ajax({
+        type: "delete",
+        url: `/atendimento-escola/destroy/problema/${id}`,
+        data: {_token},
+        success: function (response) {
+            $(`#li-${id}`).remove();
+        }
+    });
+}
 function criar() {
     let dados = {
         lista: $('.lista').length,
@@ -138,4 +175,17 @@ function addProblema(){
     }
     problema.val('');
     
+}
+var arrProblema2 = [];
+function addProblema2() {
+    let problema = $('#problema-modal-2');
+    let addProblema = $('#add-problema-modal-2');
+    let listaProblema = $('#problema-listagem');
+    let valorProblema = problema.val();
+    if (valorProblema != '') {
+        listaProblema.append(`<li class="list-group-item lista"><input class='form-check-input ' type='checkbox' id='check-box'><label class='form-check-label' for='flexCheckDefault'><div class="bolinha-azul"></div> ${valorProblema}<i  style="position: relative; left: 300px; color: red" class="bi bi-trash3 "></i></label></li>`)
+        arrProblema2.push(valorProblema);
+    }
+    console.log(arrProblema2);
+    problema.val('');
 }

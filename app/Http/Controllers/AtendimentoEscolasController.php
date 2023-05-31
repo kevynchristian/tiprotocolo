@@ -19,13 +19,14 @@ class AtendimentoEscolasController extends Controller
     public function index(Request $request)
     {
         $funcionarios = Funcionario::whereIn('funcao', [2, 4, 5])->where(['ativo' => 1])
-        ->orderBy('nome', 'asc')
-        ->get();
+            ->orderBy('nome', 'asc')
+            ->get();
         $escolas = Escola::orderBy('escola', 'asc')->get();
         return view('atendimento-escola.index', compact('escolas', 'funcionarios'));
     }
 
-    public function events(){
+    public function events()
+    {
         $data = array();
         $atendimentos = AtendimentoEscola::all();
         for ($i = 0; $i < $atendimentos->count(); $i++) {
@@ -66,7 +67,7 @@ class AtendimentoEscolasController extends Controller
             'escola' => $request->escola,
             'solucao' => ''
         ]);
-        for($i = 0; $i < $request->lista; $i++){
+        for ($i = 0; $i < $request->lista; $i++) {
             Problema::create([
                 'feito' => 0,
                 'tomb_escola_id' => $atendimento->escola,
@@ -74,7 +75,7 @@ class AtendimentoEscolasController extends Controller
                 'desc' => $request->valorLista[$i],
             ]);
         }
-        }
+    }
 
     /**
      * Display the specified resource.
@@ -87,7 +88,7 @@ class AtendimentoEscolasController extends Controller
     {
         $atendimento = AtendimentoEscola::with('problemaModel', 'escolaModel')->where('id', $id)->get();
 
-        return [ 0 => $atendimento, 1 => 1];
+        return [0 => $atendimento, 1 => 1];
     }
 
     /**
@@ -103,18 +104,33 @@ class AtendimentoEscolasController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request->all());
-        foreach($request->listagemProblema as $problema){
-            $problemaLista = Problema::find($problema);
-            $problemaLista->update([
-                'feito' => 1,
-            ]);
-            $problemaLista->escolaModel->update([
-                'titulo' => $request->escola
+        
+        if (!empty($request->listagemProblema)) {
+            foreach ($request->listagemProblema as $problema) {
+                $problemaLista = Problema::find($problema);
+                $problemaLista->update([
+                    'feito' => 1,
+                ]);
+                $idEscola = Escola::find($request->escola);
+
+                $problemaLista->escolaModel->update([
+                    'inicio' => $request->data,
+                    'titulo' => $idEscola->escola
+                ]);
+            }
+        }else {
+            $idEscola = Escola::find($request->escola);
+            $atendimento = AtendimentoEscola::find($request->idAtendimento);
+            $atendimento->update([
+                'inicio' => $request->data,
+                'titulo' => $idEscola->escola
             ]);
         }
     }
-
+    public function destroyProblema($id)
+    {
+        Problema::find($id)->delete();
+    }
     /**
      * Remove the specified resource from storage.
      */

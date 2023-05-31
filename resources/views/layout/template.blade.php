@@ -41,6 +41,20 @@
     <link id="pagestyle" href="{{asset('../assets/css/argon-dashboard.css?v=2.0.4')}}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
+<style>
+     body::-webkit-scrollbar {
+            width: 12px;               /* width of the entire scrollbar */
+            }
+
+        body::-webkit-scrollbar-track {
+            background: grey;        /* color of the tracking area */
+            }
+
+        body::-webkit-scrollbar-thumb {
+            background-color: #024f9b;    /* color of the scroll thumb */
+            border-radius: 20px;       /* roundness of the scroll thumb */
+            }
+</style>
 <body id="body" class="g-sidenav-show   bg-gray-100 ">
     <div class="min-height-300 bg-primary position-absolute w-100"></div>
 

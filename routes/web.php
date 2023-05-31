@@ -47,6 +47,7 @@ Route::middleware('autenticador')->group(function(){
         Route::post('/finalizar/{id}', [AtendimentoEscolasController::class, 'finalizar'])->name('atendimento-escola.finalizar');
         Route::delete('/destroy/{id}', [AtendimentoEscolasController::class, 'destroy'])->name('atendimento-escola.destroy');
         Route::get('/update', [AtendimentoEscolasController::class, 'update'])->name('atendimento-escola.update');
+        Route::delete('/destroy/problema/{id}', [AtendimentoEscolasController::class, 'destroyProblema'])->name('atendimento-escola.destroy.problema');
     });
     
     Route::prefix('/protocolo')->group(function(){

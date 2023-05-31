@@ -17,7 +17,7 @@
             margin-top: 300px;
         }
         .lista {
-            background-color: rgb(247, 247, 247);
+            background-color: rgb(252, 252, 252);
             color: white;
         }
         .bolinha-verde {
@@ -29,7 +29,7 @@
             position: relative;
             top: 15px
         }
-      
+       
     </style>
     </head>
 
@@ -116,7 +116,7 @@
                             <div class="row">
                                 <div class="col">
                                     <strong>Escola: </strong>
-                                    <select id="escola" class="form-select" aria-label="Default select example">
+                                    <select id="escola-modal" class="form-select" aria-label="Default select example">
                                         @foreach ($escolas as $escola)
                                             <option value="{{$escola->id }}">{{ $escola->escola }}</option>
                                         @endforeach
@@ -156,9 +156,19 @@
                                 </div>
                             </div><br>
                             <div class="row">
-                                <div class="col">
-                                    <strong>Problema:</strong>
+                                <strong>Problemas:</strong>
+
+                                <div class="col-3">
+                                        <input id="problema-modal-2" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-3">
+                                        <button id="add-problema-modal-2" class="btn btn-info"><i class="bi bi-plus-lg"></i></button>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                
                                     <ul id="problema-listagem" class="list-group">
+                                        
                                     </ul>
                                 </div>
                             </div><br>
