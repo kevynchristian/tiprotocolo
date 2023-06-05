@@ -17,31 +17,41 @@ $(document).ready(function () {
 
         let problema = $('#problema-modal-2 ').val();
     })
-    $('#criar-evento').on('hide.bs.modal', function(){
+    $('#criar-evento').on('hide.bs.modal', function () {
         let listaProblema = $('#lista-problema');
         listaProblema.empty();
     })
-    $('#ver-evento').on('hide.bs.modal', function(){
+    $('#ver-evento').on('hide.bs.modal', function () {
         let ver = $('#problema-listagem');
         ver.empty();
     })
-     $('#salvar').click(() => {
-        salvar();
+    $('#finalizar-problema').click(() => {
+        finalizarProblema();
+    })
+    $('#salvar').click(() => {
+        editarAtendimento();
+    })
+    $('#excluir').click(() => {
+        excluir();
     })
 })
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
+       
         headerToolbar: {
             left: 'prevYear,prev,next,nextYear today',
             center: 'title',
             right: 'dayGridMonth,dayGridWeek,dayGridDay'
         },
+        
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         locale: 'pt-br',
-        events: { url: '/atendimento-escola/events' },
+        events: {
+            url: '/atendimento-escola/events' ,
+            },
         dateClick: function (date, jsEvent, view) {
             $('#criar-evento').modal('show');
         },
@@ -57,30 +67,56 @@ document.addEventListener('DOMContentLoaded', function () {
                 url: `/atendimento-escola/show/${id}`,
                 type: 'get',
                 success: function (dados) {
-                    $('#escola-modal').val(dados[0][0].escola_model.id);
-                    data.val(dados[0][0].inicio);
-                    for(let i = 0; i < dados[0][0].problema_model.length; i++){
-                        if(dados[0][0].problema_model[i].feito == 1){
-                            $('#problema-listagem').append(`<li class="list-group-item lista"><label class='form-check-label' for='flexCheckDefault'><div class="bolinha-azul"></div><i style="color:green; font-size:20px" class="bi bi-check"></i> ${dados[0][0].problema_model[i].desc}</label></li>`)
+                  
+                        if(dados[0][0].finalizado == 1){
+                            $('#finalizar').hide();
+                            $('#salvar').hide();
+                            $('#escola-modal').prop('disabled', true);
+                            $('#solucao').prop('disabled', true);
+                            $('#data2').prop('disabled', true);
+                            $('#finalizar-problema').hide();
+                            $('#problema-modal-2').hide();
+                            $('#add-problema-modal-2').hide();
+                            $('#tecnico').prop('disabled', true);
+                            $('#tecnico').val(dados[0][0].funcionario_model[0].id);
+                            $('#solucao').val(dados[0][0].solucao);
                         }else {
-                            $('#problema-listagem').append(`<li id="li-${dados[0][0].problema_model[i].id}" class="list-group-item lista">
+                            $('#tecnico').show();
+                            $('#tecnico').val();
+                            $('#text-tecnico').hide();
+                            $('#problema-modal-2').show();
+                            $('#add-problema-modal-2').show();
+                            $('#finalizar-problema').show();
+                            $('#escola-modal').prop('disabled', false);
+                            $('#tecnico').prop('disabled', false);
+                            $('#solucao').prop('disabled', false);
+                            $('#data2').prop('disabled', false);
+                        }
+                        $('#escola-modal').val(dados[0][0].escola_model.id);
+                        data.val(dados[0][0].inicio);
+                        for (let i = 0; i < dados[0][0].problema_model.length; i++) {
+                            if (dados[0][0].problema_model[i].feito == 1) {
+                                $('#problema-listagem').append(`<li  class="list-group-item lista"><label class='form-check-label' for='flexCheckDefault'><div class="bolinha-azul"></div><i style="color:green; font-size:20px" class="bi bi-check"></i> ${dados[0][0].problema_model[i].desc}</label></li>`)
+                            } else {
+                                $('#problema-listagem').append(`<li id="li-${dados[0][0].problema_model[i].id}" class="list-group-item lista">
                             <div class="row">
                                 <div class="col">
-                                    <input data-status="${dados[0][0].problema_model[i].id}" onclick="checkProblema(${dados[0][0].problema_model[i].id})" class='form-check-input ' type='checkbox' value='${dados[0][0].problema_model[i].id}' id='check-box'><label class='form-check-label' for='flexCheckDefault'><div class="bolinha-azul">
+                                    <input data-status="${dados[0][0].problema_model[i].id}" onclick="checkProblema(${dados[0][0].problema_model[i].id})" class='form-check-input ' type='checkbox' value='${dados[0][0].problema_model[i].id}' id='check-box-${dados[0][0].problema_model[i].id}'><label class='form-check-label' for='flexCheckDefault'><div class="bolinha-azul">
                                     </div> ${dados[0][0].problema_model[i].desc}
                                    
                                     </label>
                                 </div>
                                 <div class="col text-end">
-                                    <i onclick="removerProblema(${dados[0][0].problema_model[i].id})" style="z-index: 100%;  color: red" class="bi bi-trash3 "></i>
+                                    <i onclick="removerProblema(${dados[0][0].problema_model[i].id})" style="z-index: 100%; cursor:pointer;  color: red" class="bi bi-trash3 "></i>
                                 </div>
                             </div>
                             
                         </li>`)
 
+                            }
                         }
-                    }
-                    
+
+
                 }
             })
         }
@@ -90,36 +126,34 @@ document.addEventListener('DOMContentLoaded', function () {
     calendar.render();
 });
 let listagemProblema = [];
-function checkProblema(id){
-    if($('#check-box').is(':checked')){
-        listagemProblema.push(id)
-    }else {
-        listagemProblema.pop(id);
+function checkProblema(id) {
+    if ($(`#check-box-${id}`).is(':checked')) {
+        listagemProblema.push(id);
     }
-    
-    
-}   
+    else {
+        listagemProblema.pop();
+    }
 
-function salvar(){
-    let escola = $('#escola-modal').val();
-    let data = $('#data2').val();
+}
+
+function finalizarProblema() {
     let idAtendimento = $('#id-atendimento').val();
     $.ajax({
         type: "get",
-        url: `/atendimento-escola/update`,
-        data: {_token, listagemProblema, escola, data, idAtendimento},
+        url: `/atendimento-escola/finalizar/problema`,
+        data: { _token, listagemProblema },
         success: function (response) {
             listagemProblema = [];
             $('#ver-evento').modal('hide');
             location.reload();
-            }
-        });
+        }
+    });
 }
-function removerProblema(id){
+function removerProblema(id) {
     $.ajax({
         type: "delete",
         url: `/atendimento-escola/destroy/problema/${id}`,
-        data: {_token},
+        data: { _token },
         success: function (response) {
             $(`#li-${id}`).remove();
         }
@@ -139,16 +173,22 @@ function criar() {
         type: 'get',
         data: dados,
         success: function (dados) {
-            $('#criar-evento').modal('hide');
-            let listaProblema = $('#lista-problema');
-            listaProblema.empty();
+            if(dados == 0){
+                mensagem('Problema adicionado!', 'alert-success');
+            }else{
+
+                $('#criar-evento').modal('hide');
+                let listaProblema = $('#lista-problema');
+                listaProblema.empty();
+                location.reload();
+            }
         }
     })
 }
 function finalizar() {
     let dados = {
         _token,
-        prioridade: $('#check-prioridade').val(),
+        tecnico: $('#tecnico').val(),
         data: $('#data2').val(),
         solucao: $('#solucao').val(),
     }
@@ -158,13 +198,14 @@ function finalizar() {
         type: 'post',
         data: dados,
         success: function () {
+            location.reload();
         }
     })
 }
 //preciso de dois elemtento o botao para clicar e o elemento de input que preciso
 
 var arrProblema = [];
-function addProblema(){
+function addProblema() {
     let problema = $('#problema');
     let addProblema = $('#add-problema');
     let listaProblema = $('#lista-problema');
@@ -174,18 +215,79 @@ function addProblema(){
         arrProblema.push(valorProblema);
     }
     problema.val('');
-    
+
 }
 var arrProblema2 = [];
 function addProblema2() {
-    let problema = $('#problema-modal-2');
+    //botao de adicionar
     let addProblema = $('#add-problema-modal-2');
+    //ul para listar o problemas
     let listaProblema = $('#problema-listagem');
-    let valorProblema = problema.val();
+    //input
+    let valorProblema = $('#problema-modal-2').val();
+    //valor do id do problema
+    let id = $('#id-atendimento').val();
     if (valorProblema != '') {
-        listaProblema.append(`<li class="list-group-item lista"><input class='form-check-input ' type='checkbox' id='check-box'><label class='form-check-label' for='flexCheckDefault'><div class="bolinha-azul"></div> ${valorProblema}<i  style="position: relative; left: 300px; color: red" class="bi bi-trash3 "></i></label></li>`)
-        arrProblema2.push(valorProblema);
+        $.ajax({
+            type: "post",
+            url: "/atendimento-escola/add/problema",
+            data: { _token, valorProblema, id },
+            success: function (response) {
+                listaProblema.append(`<li  class="list-group-item lista">
+                    <div class="row">
+                        <div class="col">
+                            <input class='form-check-input' onclick(checkProblema(${valorProblema}) type='checkbox' id='check-box-${response}'><label class='form-check-label' for='flexCheckDefault'><div class="bolinha-azul">
+                            </div> ${valorProblema}
+                           
+                            </label>
+                        </div>
+                        <div class="col text-end">
+                        <i onclick="removerProblema()" style="z-index: 100%; cursor:pointer;  color: red" class="bi bi-trash3 "></i>
+                        </div>
+                    </div>
+                    
+                </li>`)
+                arrProblema2.push(valorProblema);
+                mensagem('Problema adicionado!', 'alert-success');
+            }
+        });
     }
-    console.log(arrProblema2);
-    problema.val('');
+    $('#problema-modal-2').val('');
+}
+function editarAtendimento() {
+    let id = $('#id-atendimento').val();
+    let dados = {
+        _token,
+        escola: $('#escola-modal').val(),
+        data: $('#data2').val()
+    }
+    $.ajax({
+        type: "post",
+        url: `/atendimento-escola/update/atendimento/${id}`,
+        data: dados,
+        success: function (response) {
+            console.log(response);
+            location.reload();
+        }
+    });
+}
+function excluir(){
+    let id = $('#id-atendimento').val();
+    $.ajax({
+        type: "delete",
+        url: `/atendimento-escola/destroy/${id}`,
+        data: {_token},
+        success: function (response) {
+            location.reload();
+        }
+    });
+}
+function mensagem(mensagem, classe){
+    $('#erro').show();
+    $('#msg').text(mensagem);
+    $('#erro').addClass(classe);
+    setTimeout(() => {
+        $('#erro').removeClass(classe);
+        $('#erro').hide();
+    }, 2000);
 }

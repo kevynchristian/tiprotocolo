@@ -46,8 +46,11 @@ Route::middleware('autenticador')->group(function(){
         Route::get('/show/{id}', [AtendimentoEscolasController::class, 'show'])->name('atendimento-escola.show');
         Route::post('/finalizar/{id}', [AtendimentoEscolasController::class, 'finalizar'])->name('atendimento-escola.finalizar');
         Route::delete('/destroy/{id}', [AtendimentoEscolasController::class, 'destroy'])->name('atendimento-escola.destroy');
-        Route::get('/update', [AtendimentoEscolasController::class, 'update'])->name('atendimento-escola.update');
+        Route::get('/finalizar/problema', [AtendimentoEscolasController::class, 'finalizarProblema'])->name('atendimento-escola.finalizar');
+        Route::post('/add/problema', [AtendimentoEscolasController::class, 'addProblema'])->name('atendimento-escola.add-problema');
         Route::delete('/destroy/problema/{id}', [AtendimentoEscolasController::class, 'destroyProblema'])->name('atendimento-escola.destroy.problema');
+        Route::delete('/destroy/{id}', [AtendimentoEscolasController::class, 'destroy'])->name('atendimento-escola.destroy');
+        Route::post('/update/atendimento/{id}', [AtendimentoEscolasController::class, 'update'])->name('atendimento-escola.update');
     });
     
     Route::prefix('/protocolo')->group(function(){
@@ -116,7 +119,7 @@ Route::middleware('autenticador')->group(function(){
         Route::post('/update', [EscolaController::class, 'update'])->name('escolas.update');
     });
     Route::prefix('/graficos')->group(function(){
-        Route::get('/index', [GraficosController::class, 'index'])->name('graficos.index');
+        Route::get('/anual', [GraficosController::class, 'anual'])->name('graficos.anual');
         Route::post('/store', [GraficosController::class, 'store'])->name('graficos.store');
     });
 });

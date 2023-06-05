@@ -26,7 +26,6 @@ $(document).ready(() => {
     $('#btn-saida').click(() => {
         equipamentoParaSaida();
     });
-
 });
 
 function mudaStatus() {
@@ -92,7 +91,17 @@ function exibirPorStatus(status) {
         },
         success: function (dados) {
             console.log(dados);
-            $('#tabela-equipamentos').html(dados)
+            $('#tabela-equipamentos').append(`  <div id="equipamento-{{$protocolo->id}}" class="col-md-4 text-center">
+            <img onclick="visualizarEquipamento({{ $protocolo->id }})" type="button"
+                data-bs-toggle="modal" data-bs-target="#modalEquipamentos" style="width:100px"
+                src="{{ URL::asset('assets/img/' . $protocolo->tipo . '.png') }}"><br>
+            @if ($protocolo->prioridade == 1)
+                <span style="color: red"><strong>{{ $protocolo->tombamento }}</strong></span><br>
+            @else
+                <span><strong>{{ $protocolo->tombamento }}</strong></span><br>
+            @endif
+            <span><strong>{{ date('d/m/Y', strtotime($protocolo->created_at)) }}</strong></span>
+        </div>`)
         }
     })
 }
@@ -202,7 +211,6 @@ function visualizarEquipamento(id) {
                 $('#btn-inservivel').hide();
             }
             if (dados.status == 2) {
-                console.log(dados);
                 $('#funcionario').prop('disabled', false);
                 $('#funcionario').val(dados.id_responsavel);
                 $("#selecionarFuncionario").show();

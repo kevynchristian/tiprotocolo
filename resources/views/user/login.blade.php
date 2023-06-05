@@ -36,7 +36,7 @@
 </head>
 <style>
   body {
-    background-color: #576879;
+    background-color: #ffffff;
   }
 </style>
 <body class="">
@@ -61,7 +61,7 @@
                     {{session('msg')}}
                   </div>
                 @endif
-                <div style="background-color: white; height:400px; border-radius: 20px">
+                <div style="background-color: white; border: 1px solid rgb(211, 208, 208); height:500px; border-radius: 10px">
                   <div class="col text-center mt-4" style="font-size: 40px">
                      ProtocolosTI
                    </div>

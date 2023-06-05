@@ -22,14 +22,21 @@ $(document).ready(() => {
     })
     $('#btn-andamento').click(() => {
         equipamentoParaAndamento();
+        
     })
     $('#btn-entrada').click(() => {
         equipamentoParaEntrada()
+        
     });
     $('#btn-saida').click(() => {
         equipamentoParaSaida();
     });
-
+    $('#btn-inservivel').click(() => {
+        equipamentoParaInservivel();
+    })
+    $('#btn-retirar').click(() => {
+        equipamentoParaRetirada();
+    })
 });
 
 function mudaStatus() {
@@ -51,6 +58,7 @@ function filtros() {
         data: { ano, status, _token },
         success: function (dados) {
             $('#tabela-equipamentos').html(dados);
+            $('#modalFiltros').modal('hide');
         }
 
     })
@@ -94,7 +102,6 @@ function exibirPorStatus(status) {
             status
         },
         success: function (dados) {
-            console.log(dados);
             $('#tabela-equipamentos').html(dados)
         }
     })
@@ -117,6 +124,7 @@ function equipamentoParaAndamento() {
         },
         success: function () {
             $(`#equipamento-${id}`).remove();
+            $('#modalEquipamentos').modal('hide');
         }
     })
 }
@@ -133,6 +141,7 @@ function equipamentoParaEntrada() {
         },
         success: function () {
             $(`#equipamento-${id}`).remove();
+            $('#modalEquipamentos').modal('hide');
         }
     })
 }
@@ -149,7 +158,7 @@ function equipamentoParaSaida() {
         },
         success: function () {
             $(`#equipamento-${id}`).remove();
-
+            $('#modalEquipamentos').modal('hide');
         }
     })
 }
@@ -167,7 +176,7 @@ function equipamentoParaRetirada() {
 
         success: function () {
             $(`#equipamento-${id}`).remove();
-
+            $('#modalEquipamentos').modal('hide');
         }
     })
 }
@@ -184,12 +193,14 @@ function equipamentoParaInservivel() {
         },
         success: function () {
             $(`#equipamento-${id}`).remove();
+            $('#modalEquipamentos').modal('hide');
         }
     })
 }
 
 
 function visualizarEquipamento(id) {
+
     $.ajax({
         url: '/estante/show/' + id,
         type: 'get',
@@ -199,17 +210,20 @@ function visualizarEquipamento(id) {
                 $('#div-solucao').hide()
                 $('#solucaoModal').hide();
                 $('#statusModal').text('Em aberto');
+                $('#btn-andamento').show()
                 $('#btn-saida').hide();
                 $('#btn-entrada').hide();
                 $('#btn-retirar').hide();
                 $('#btn-inservivel').hide();
+                $('#modalEquipamentos').modal('hide');
             }
             if (dados.status == 2) {
-                console.log(dados);
                 $('#funcionario').prop('disabled', false);
                 $('#funcionario').val(dados.id_responsavel);
                 $("#selecionarFuncionario").show();
                 $('#statusModal').text('Em andamento');
+                $('#btn-entrada').show();
+                $('#btn-saida').show();
                 $('#btn-andamento').hide();
                 $('#btn-retirar').hide();
                 $('#btn-inservivel').hide();
@@ -223,6 +237,8 @@ function visualizarEquipamento(id) {
                 $('#statusModal').text('Saída');
                 $('#btn-andamento').hide();
                 $('#btn-saida').hide();
+                $('#btn-retirar').show();
+                $('#btn-inservivel').show();
                 $('#btn-entrada').hide();
 
             }

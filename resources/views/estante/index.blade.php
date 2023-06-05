@@ -242,7 +242,7 @@
     </div>
     </div>
 
-
+   
     <script src="{{ asset('/assets/js/jquery.js') }}"></script>
     <script src="{{ asset('/assets/js/estante/index.js') }}"></script>
 @endsection

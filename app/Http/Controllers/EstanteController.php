@@ -69,8 +69,11 @@ class EstanteController extends Controller
             if($request->statusPassar == 5){
                 $protocolo->update(['status' => $request->statusPassar]);
             }
+            elseif($request->statusPassar == 4){
+                $protocolo->update(['status' => $request->statusPassar]);
+            }
         }
-
+      
     }
     public function create()
     {

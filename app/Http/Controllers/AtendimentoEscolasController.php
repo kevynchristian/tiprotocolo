@@ -6,10 +6,13 @@ use App\Models\AtendimentoEscola;
 use App\Models\Escola;
 use App\Models\Funcionario;
 use App\Models\Problema;
+use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use function GuzzleHttp\Promise\all;
+use function PHPSTORM_META\map;
 
 class AtendimentoEscolasController extends Controller
 {
@@ -39,7 +42,7 @@ class AtendimentoEscolasController extends Controller
                 "id" => $atendimentos[$i]->id,
             );
         }
-        json_encode($data);
+        return json_encode($data);
         return $data;
     }
     /**
@@ -55,25 +58,31 @@ class AtendimentoEscolasController extends Controller
      */
     public function store(Request $request)
     {
-        $escola = Escola::find($request->escola);
-        $atendimento = AtendimentoEscola::create([
-            'prioridade' => 0,
-            'finalizado' => 0,
-            'inicio' => $request->data,
-            'cor' => null,
-            'titulo' => $escola->escola,
-            'funcionario_abriu' => Auth::user()->id,
-            'funcionario_fez' => 0,
-            'escola' => $request->escola,
-            'solucao' => ''
-        ]);
-        for ($i = 0; $i < $request->lista; $i++) {
-            Problema::create([
-                'feito' => 0,
-                'tomb_escola_id' => $atendimento->escola,
-                'evento_id' => $atendimento->id,
-                'desc' => $request->valorLista[$i],
+        try {
+            $escola = Escola::find($request->escola);
+            $atendimento = AtendimentoEscola::create([
+                'prioridade' => 0,
+                'finalizado' => 0,
+                'inicio' => $request->data,
+                'cor' => null,
+                'titulo' => $escola->escola,
+                'funcionario_abriu' => Auth::user()->id,
+                'funcionario_fez' => 0,
+                'escola' => $request->escola,
+                'solucao' => ''
             ]);
+            for ($i = 0; $i < $request->lista; $i++) {
+                Problema::create([
+                    'feito' => 0,
+                    'tomb_escola_id' => $atendimento->escola,
+                    'evento_id' => $atendimento->id,
+                    'desc' => $request->valorLista[$i],
+                ]);
+            }
+
+            return 1;
+        }catch(Exception $ex){
+            return 0;
         }
     }
 
@@ -82,12 +91,11 @@ class AtendimentoEscolasController extends Controller
      */
     public function finalizar(Request $request, $id)
     {
-        dd($request->all());
+        AtendimentoEscola::find($id)->update(['finalizado' => 1, 'cor' => 'rgb(31,142,35)', 'funcionario_fez' => $request->tecnico, 'solucao' => $request->solucao]);
     }
     public function show(string $id)
     {
-        $atendimento = AtendimentoEscola::with('problemaModel', 'escolaModel')->where('id', $id)->get();
-
+        $atendimento = AtendimentoEscola::with('problemaModel', 'escolaModel', 'funcionarioModel')->where('id', $id)->get();
         return [0 => $atendimento, 1 => 1];
     }
 
@@ -96,36 +104,45 @@ class AtendimentoEscolasController extends Controller
      */
     public function edit(string $id)
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
-    {
+    public function addProblema(Request $request){
+        $atendimento = AtendimentoEscola::find($request->id);
         
+        Problema::create([
+            'feito' => 0,
+            'tomb_escola_id' => $atendimento->escola,
+            'evento_id' => $atendimento->id,
+            'desc' => $request->valorProblema, 
+        ]);
+    }
+    public function update(Request $request, $id){
+        try{
+           $escola = Escola::find($request->escola);
+           $atendimento = AtendimentoEscola::find($id);
+           $atendimento->update(['titulo' => $escola->escola,'escola' => $request->escola, 'inicio' => $request->data]);
+           return 1;
+        }catch(Exception $ex){
+            return 0;
+        }
+    }
+    public function finalizarProblema(Request $request)
+    {
+        $arr = [];
         if (!empty($request->listagemProblema)) {
-            foreach ($request->listagemProblema as $problema) {
-                $problemaLista = Problema::find($problema);
-                $problemaLista->update([
+            for($i = 0; $i < count($request->listagemProblema); $i++){
+             
+                Problema::find($request->listagemProblema[$i])->update([
                     'feito' => 1,
                 ]);
-                $idEscola = Escola::find($request->escola);
-
-                $problemaLista->escolaModel->update([
-                    'inicio' => $request->data,
-                    'titulo' => $idEscola->escola
-                ]);
+                array_push($arr, $request->listagemProblema[$i]);
             }
-        }else {
-            $idEscola = Escola::find($request->escola);
-            $atendimento = AtendimentoEscola::find($request->idAtendimento);
-            $atendimento->update([
-                'inicio' => $request->data,
-                'titulo' => $idEscola->escola
-            ]);
-        }
+            return $arr;
+    }
+        
     }
     public function destroyProblema($id)
     {
@@ -136,6 +153,14 @@ class AtendimentoEscolasController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $atendimento = AtendimentoEscola::with('problemaModel')->where('id', $id)->first();
+        if(isset($atendimento)){
+            foreach($atendimento->problemaModel as $problema){
+                $problema->delete();
+            }
+            $atendimento->delete();
+        }
+        
+        
     }
 }

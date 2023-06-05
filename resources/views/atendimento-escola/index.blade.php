@@ -33,7 +33,12 @@
     </style>
     </head>
 
-    <body>
+    <body> 
+        <div class="row">
+            <div class="col text-center" >
+                <h1 style="color: white">Atendimento as Escolas</h1>
+            </div>
+        </div>
         <input type="hidden" id="_token" value="{{ csrf_token() }}">
         <div id='calendar'></div>
         <!-- Modal - create -->
@@ -104,6 +109,7 @@
 
         <!-- Modal - index -->
         <div class="modal fade" id="ver-evento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
             <input type="hidden" name="" id="id-atendimento">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -112,6 +118,10 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <div id="erro" style="display: none" class="alert" role="alert">
+                            <strong id="msg"></strong>
+                          </div>
+                          
                         <div class="container">
                             <div class="row">
                                 <div class="col">
@@ -128,24 +138,13 @@
                             
                             <div class="row">
                                 <div class="col">
-                                    <strong>Técnico responsável: </strong>
+                                    <strong>Técnico responsável: <span id="text-tecnico"></span> </strong>
                                     <select id="tecnico" class="form-select" aria-label="Default select example">
                                         <option selected>Selecione um funcionário</option>
                                         @foreach ($funcionarios as $funcionario)
                                             <option value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
                                         @endforeach
                                     </select>
-                                </div>
-                            </div><br>
-                            <div class="row">
-                                <div class="col">
-                                    <strong>Prioridade?</strong>
-                                    <div class="form-check">
-                                        <input id="check-prioridade" class="form-check-input" type="radio"
-                                            name="flexRadioDefault" id="flexRadioDefault1">
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                        </label>
-                                    </div>
                                 </div>
                             </div><br>
                             <div class="row">
@@ -170,6 +169,7 @@
                                     <ul id="problema-listagem" class="list-group">
                                         
                                     </ul>
+                                    <button id="finalizar-problema" style="width: 200px" class="btn btn-warning mt-2">Finalizar Problema</button>
                                 </div>
                             </div><br>
                             <div class="row">
@@ -182,21 +182,18 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-info">Excluir</button>
-                        <button id="salvar" type="button" class="btn btn-success">Salvar</button>
-                        <button id="finalizar" type="button" class="btn btn-primary">Finalizar</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button id="excluir" type="button" class="btn btn-info">Excluir</button>
+                            <button id="salvar" type="button" class="btn btn-success">Salvar</button>
+                            <button id="finalizar" type="button" class="btn btn-primary">Finalizar</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script>
-            $('#data').datepicker();
-        </script>
-        <script src="{{ asset('assets/datepicker/bootstrap-datepicker.min.js') }}"></script>
+       
         <script src="{{ asset('assets/js/jquery.js') }}"></script>
         <script src="{{ asset('assets/js/full-calendar/index.js') }}"></script>
     @endsection

@@ -27,4 +27,8 @@ class AtendimentoEscola extends Model
     public function escolaModel(){
         return $this->hasOne(Escola::class, 'id', 'escola');
     }
+    public function funcionarioModel(){
+        return $this->hasMany(Funcionario::class, 'id', 'funcionario_fez');
+    }
+    
 }
