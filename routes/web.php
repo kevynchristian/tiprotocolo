@@ -52,7 +52,7 @@ Route::middleware('autenticador')->group(function(){
         Route::delete('/destroy/{id}', [AtendimentoEscolasController::class, 'destroy'])->name('atendimento-escola.destroy');
         Route::post('/update/atendimento/{id}', [AtendimentoEscolasController::class, 'update'])->name('atendimento-escola.update');
     });
-    
+
     Route::prefix('/protocolo')->group(function(){
         Route::get('/create', [ProtocoloEntradaController::class, 'create'])->name('protocolo.create');
         Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
@@ -120,6 +120,7 @@ Route::middleware('autenticador')->group(function(){
     });
     Route::prefix('/graficos')->group(function(){
         Route::get('/anual', [GraficosController::class, 'anual'])->name('graficos.anual');
+        Route::get('/participacoes', [GraficosController::class, 'participacoes'])->name('graficos.participacoes');
         Route::post('/store', [GraficosController::class, 'store'])->name('graficos.store');
     });
 });

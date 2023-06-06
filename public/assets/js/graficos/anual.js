@@ -5,7 +5,9 @@ $('#ano').change(function() {
         url: "/graficos/anual",
         data: {ano},
         success: function (response) {
-            
+            $('#container').html(response)
+
+
         }
     });
 })

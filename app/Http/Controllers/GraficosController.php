@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\AtendimentoEscola;
 use App\Models\AtendimentoInterno;
+use App\Models\Funcionario;
 use App\Models\ProtocoloTombamento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GraficosController extends Controller
 {
@@ -14,6 +16,7 @@ class GraficosController extends Controller
      */
     public function anual(Request $request)
     {
+        $anoSelect = $request->ano;
         if (!empty($request->all())) {
             $anos = [];
             for ($i = 2017; $i <= date('Y'); $i++) {
@@ -30,13 +33,13 @@ class GraficosController extends Controller
             $newArrayConsertos = implode(',', $consertos);
             $newArrayEscolas = implode(',', $escolas);
             $newArrayInterno = implode(',', $internos);
-            return view('graficos.anual', compact('newArrayConsertos', 'newArrayEscolas', 'newArrayInterno', 'anos'));
-        } else {
+            return view('graficos.tabelas-grafico', compact('newArrayConsertos', 'newArrayEscolas', 'newArrayInterno', 'anoSelect'));
+        }
             $anos = [];
             for ($i = 2017; $i <= date('Y'); $i++) {
                 $anos[] = $i;
             }
-    
+
             $consertos = [];
             $internos = [];
             $escolas = [];
@@ -49,8 +52,28 @@ class GraficosController extends Controller
             $newArrayEscolas = implode(',', $escolas);
             $newArrayInterno = implode(',', $internos);
             return view('graficos.anual', compact('newArrayConsertos', 'newArrayEscolas', 'newArrayInterno', 'anos'));
-        }
 
+    }
+    public function participacoes()
+    {
+        $anos = [];
+        for ($i = 2017; $i <= date('Y'); $i++) {
+            $anos[] = $i;
+        }
+        $funcionarios = DB::table('funcionario')
+        ->whereIn('funcao', [2,4,5,6])
+        ->where('ativo', 1)
+        ->get();
+
+        $funcionariosAtendimentosInternos = Funcionario::withCount('atendimentosInternosModel')
+        ->whereIn('funcao', [2,4,5,6])
+        ->whereYear('created_at', 2023)
+        ->where('ativo', 1)
+        ->get();
+        dd($funcionariosAtendimentosInternos);
+
+
+        return view('graficos.participacoes', compact('anos', 'funcionarios'));
     }
 
     /**

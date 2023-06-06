@@ -182,10 +182,10 @@
                             data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <div style="color: black" class="list-group">
-                                   
+
                                     <a href="{{ route('graficos.anual') }}"
                                         class="list-group-item list-group-item-action">Anual</a>
-                                    <a href="{{ route('protocolo.create') }}"
+                                    <a href="{{ route('graficos.participacoes') }}"
                                         class="list-group-item list-group-item-action">Participações</a>
                                     <a href="{{ route('protocolo.index') }}"
                                         class="list-group-item list-group-item-action">Inservíveis</a>

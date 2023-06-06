@@ -22,11 +22,11 @@ $(document).ready(() => {
     })
     $('#btn-andamento').click(() => {
         equipamentoParaAndamento();
-        
+
     })
     $('#btn-entrada').click(() => {
         equipamentoParaEntrada()
-        
+
     });
     $('#btn-saida').click(() => {
         equipamentoParaSaida();
@@ -215,7 +215,7 @@ function visualizarEquipamento(id) {
                 $('#btn-entrada').hide();
                 $('#btn-retirar').hide();
                 $('#btn-inservivel').hide();
-                $('#modalEquipamentos').modal('hide');
+
             }
             if (dados.status == 2) {
                 $('#funcionario').prop('disabled', false);
