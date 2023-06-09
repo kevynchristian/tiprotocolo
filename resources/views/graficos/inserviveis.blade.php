@@ -1,5 +1,6 @@
 @extends('layout.template')
 @section('content')
+
 <style>
     .highcharts-figure,
 .highcharts-data-table table {
@@ -76,19 +77,29 @@
         type: 'column'
     },
     title: {
-        text: `Participações por Funcionário - {{date('Y')}}`
+        text: 'Produção de laudos para equipamentos inservíveis - {{date('Y')}}'
     },
     subtitle: {
         text: 'Secretária de Educação de Maracanaú'
     },
     xAxis: {
         categories: [
-            @foreach ($funcionarios as $funcionario)
-            '{{ $funcionario->nome }}',
-            @endforeach
+
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
         ],
         crosshair: true,
-        max: {{ count($funcionarios) - 1 }}
+        max: 11
     },
     yAxis: {
         min: 0,
@@ -97,7 +108,7 @@
         }
     },
     tooltip: {
-        headerFormat: '<span style="font-size:20px">{point.key}</span><table>',
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
             '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
         footerFormat: '</table>',
@@ -111,23 +122,15 @@
         }
     },
     series: [{
-        name: 'Atendimento Interno',
-        data: [
-            {{$novoArrayInterno}}
-        ]
-    }, {
-        name: 'Máquinas',
-        data: [{{$novoArrayMaquinas}}]
-    }, {
-        name: 'Escolas',
-        data: [{{$novoArrayEscolas}}]
-       },
-
+        name: 'Inservíveis',
+        data: [{{$newInserviveis}}]
+    }
 
     ]
 });
 
 </script>
 <script src="{{asset('assets/js/jquery.js')}}"></script>
-<script src="{{asset('assets/js/graficos/participacoes.js')}}"></script>
-    @endsection
+<script src="{{asset('assets/js/graficos/inserviveis.js')}}"></script>
+
+@endsection

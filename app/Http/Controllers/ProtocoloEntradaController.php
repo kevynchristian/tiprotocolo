@@ -46,8 +46,9 @@ class ProtocoloEntradaController extends Controller
      */
     public function store(Request $request)
     {
+        $origem = $request->origem;
         try {
-            if ($request->origem = 91) {
+            if ($origem = 91) {
                 $protocolos = Protocolo::create([
                     'escola' => $request->origem,
                     'setor_interno' => $request->setor,

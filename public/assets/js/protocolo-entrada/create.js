@@ -24,6 +24,7 @@ $('#origem').change(() => {
 
 function cadastrarProtocolo(){
     let origem  = $('#origem').val();
+    console.log(origem);
     let setor = $('#selectSetor').val();
     let data = $('#data').val();
     $.ajax({

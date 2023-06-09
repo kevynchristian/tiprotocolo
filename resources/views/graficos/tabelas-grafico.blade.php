@@ -13,7 +13,7 @@
         type: 'column'
     },
     title: {
-        text: `Média de trabalho anual`
+        text: `Média de trabalho anual - {{$anoSelect}}`
     },
     subtitle: {
         text: 'Secretária de Educação de Maracanaú'

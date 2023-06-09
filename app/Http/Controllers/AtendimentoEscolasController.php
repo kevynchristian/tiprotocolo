@@ -91,7 +91,14 @@ class AtendimentoEscolasController extends Controller
      */
     public function finalizar(Request $request, $id)
     {
-        AtendimentoEscola::find($id)->update(['finalizado' => 1, 'cor' => 'rgb(31,142,35)', 'funcionario_fez' => $request->tecnico, 'solucao' => $request->solucao]);
+        try {
+
+            $atendimento = AtendimentoEscola::find($id);
+            $atendimento->update(['finalizado' => 1, 'cor' => 'rgb(31,142,35)', 'funcionario_fez' => $request->tecnico, 'solucao' => $request->solucao]);
+            return 1;
+        }catch(Exception $ex){
+            return 0;
+        }
     }
     public function show(string $id)
     {

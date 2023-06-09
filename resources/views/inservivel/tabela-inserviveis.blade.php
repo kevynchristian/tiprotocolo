@@ -48,7 +48,7 @@
                         data-bs-toggle="modal" data-bs-target="#modalView"
                         class="btn btn-primary"><i class="bi bi-tv"></i></button>
                     <button
-                        class="btn btn-info"><i class="bi bi-pencil-square"></i></button>
+                        class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalView"><i class="bi bi-pencil-square"></i></button>
                 </td>
             </tr>
         @endforeach

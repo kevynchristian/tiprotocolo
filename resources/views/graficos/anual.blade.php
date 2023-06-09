@@ -76,7 +76,7 @@
         type: 'column'
     },
     title: {
-        text: 'Média de trabalho anual'
+        text: 'Média de trabalho anual - {{date('Y')}}'
     },
     subtitle: {
         text: 'Secretária de Educação de Maracanaú'

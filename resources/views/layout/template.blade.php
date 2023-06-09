@@ -55,6 +55,11 @@
             background-color: #024f9b;    /* color of the scroll thumb */
             border-radius: 20px;       /* roundness of the scroll thumb */
             }
+    @media (min-width: 1193px){
+        #fechar {
+            display: none;
+        }
+    }
 </style>
 <body id="body" class="g-sidenav-show   bg-gray-100 ">
     <div class="min-height-300 bg-primary position-absolute w-100"></div>
@@ -187,7 +192,7 @@
                                         class="list-group-item list-group-item-action">Anual</a>
                                     <a href="{{ route('graficos.participacoes') }}"
                                         class="list-group-item list-group-item-action">Participações</a>
-                                    <a href="{{ route('protocolo.index') }}"
+                                    <a href="{{ route('graficos.inserviveis') }}"
                                         class="list-group-item list-group-item-action">Inservíveis</a>
                                 </div>
                             </div>

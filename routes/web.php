@@ -122,5 +122,6 @@ Route::middleware('autenticador')->group(function(){
         Route::get('/anual', [GraficosController::class, 'anual'])->name('graficos.anual');
         Route::get('/participacoes', [GraficosController::class, 'participacoes'])->name('graficos.participacoes');
         Route::post('/store', [GraficosController::class, 'store'])->name('graficos.store');
+        Route::get('/inserviveis', [GraficosController::class, 'inserviveis'])->name('graficos.inserviveis');
     });
 });

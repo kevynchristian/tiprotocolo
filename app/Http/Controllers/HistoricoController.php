@@ -17,8 +17,7 @@ class HistoricoController extends Controller
      */
     public function index(Request $request)
     {
-        $query = DB::table('users')->select('id');
-        dd($query);
+        
         $maquinas = ProtocoloTombamento::whereIn('status', [4,6])->orderBy('created_at', 'desc')->cursorPaginate(10);
         $funcionarios = Funcionario::all();
         return view('historico.index', compact('maquinas', 'funcionarios'));

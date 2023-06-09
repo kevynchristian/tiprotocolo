@@ -45,7 +45,6 @@ class InservivelController extends Controller
     public function store(Request $request)
     {
         try{
-
             $inserviveis = ProtocoloTombamento::find($request->id);
             $inserviveis->update(['status' => 6]);
             if($inserviveis){
