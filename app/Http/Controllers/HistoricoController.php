@@ -7,6 +7,7 @@ use App\Models\ProtocoloTombamento;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Enum;
 
@@ -17,7 +18,6 @@ class HistoricoController extends Controller
      */
     public function index(Request $request)
     {
-        
         $maquinas = ProtocoloTombamento::whereIn('status', [4,6])->orderBy('created_at', 'desc')->cursorPaginate(10);
         $funcionarios = Funcionario::all();
         return view('historico.index', compact('maquinas', 'funcionarios'));

@@ -16,6 +16,7 @@ use App\Models\AtendimentoEscola;
 use App\Models\Inservivel;
 use App\Models\ProtocoloTombamento;
 use App\Models\Role;
+use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -86,6 +87,7 @@ Route::middleware('autenticador')->group(function(){
         Route::get('/show/{id}', [EstanteController::class, 'show']);
         Route::post('/passar', [EstanteController::class, 'passar']);
         Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');
+        Route::get('/pdf/{id}', [EstanteController::class, 'pdf'])->name('estante.pdf');
     });
 
     Route::prefix('/inservivel')->group(function(){

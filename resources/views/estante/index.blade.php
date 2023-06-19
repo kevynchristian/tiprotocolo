@@ -188,6 +188,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                  <input type="hidden" id="pdf-id">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Dados do Equipamento</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -220,6 +221,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button id="btn-pdf" type="button" class="btn btn-secondary" data-bs-dismiss="modal">PDF</button>
                     <button data-status="2" id="btn-andamento" type="button" class="btn btn-primary">Andamento <i
                             class="bi bi-arrow-right"></i></button>
                     <button onclick="equipamentoParaEntrada()" data-status="1" id="btn-entrada" type="button"

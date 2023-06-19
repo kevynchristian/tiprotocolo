@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('equipamentos', function (Blueprint $table) {
-            $table->id();
-            $table->string('equipamento');
+        Schema::create('setores', function (Blueprint $table) {
+            $table->integer('id_setor')->autoIncrement();
+            $table->boolean('ativo');
+            $table->string('diretoria_id');
+            $table->string('setor', 100);
             $table->timestamps();
         });
     }

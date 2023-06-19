@@ -36,9 +36,22 @@ $(document).ready(() => {
     })
     $('#btn-retirar').click(() => {
         equipamentoParaRetirada();
-    })
+    });
+    $('#btn-pdf').click(function () { 
+        pdf();
+        
+    });
 });
-
+function pdf(){
+    let id = $('#pdf-id').val();
+    $.ajax({
+        type: "get",
+        url: `/estante/pdf/${id},_blank`,
+        success: function (response) {
+            window.open(`/estante/pdf/${id},_blank`);
+        }
+    });
+}
 function mudaStatus() {
     let status = $('.status').val();
     return status;
@@ -215,6 +228,8 @@ function visualizarEquipamento(id) {
                 $('#btn-entrada').hide();
                 $('#btn-retirar').hide();
                 $('#btn-inservivel').hide();
+                $('#btn-pdf').hide();
+
 
             }
             if (dados.status == 2) {
@@ -227,8 +242,11 @@ function visualizarEquipamento(id) {
                 $('#btn-andamento').hide();
                 $('#btn-retirar').hide();
                 $('#btn-inservivel').hide();
+                $('#btn-pdf').hide();
+
             }
             if (dados.status == 3) {
+                $('#pdf-id').val(dados.id);
                 $('#funcionario').prop('disabled', true);
                 $('#solucao').prop('disabled', true);
                 $('#solucao').val(dados.solucao)
@@ -240,6 +258,7 @@ function visualizarEquipamento(id) {
                 $('#btn-retirar').show();
                 $('#btn-inservivel').show();
                 $('#btn-entrada').hide();
+                $('#btn-pdf').show();
 
             }
 

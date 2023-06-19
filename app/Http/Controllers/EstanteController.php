@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Funcionario;
 use App\Models\Protocolo;
 use App\Models\ProtocoloTombamento;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class EstanteController extends Controller
@@ -80,6 +81,11 @@ class EstanteController extends Controller
         return view('protocolo-entrada.create');
     }
 
+    public function pdf($id){
+        $equipamentos = ProtocoloTombamento::with('protocoloModel')->find($id);
+        $pdf = Pdf::loadView('estante.pdf', compact('equipamentos'));   
+        return $pdf->stream();
+    }
     /**
      * Store a newly created resource in storage.
      */
