@@ -1,6 +1,7 @@
 @extends('layout.template')
 @section('content')
 @section('title')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <li class="breadcrumb-item text-sm text-white active" aria-current="page">Estante</li>
         </ol>
         <h6 class="font-weight-bolder text-white mb-0">Estante</h6>
@@ -117,7 +118,7 @@
                 <div class="container" id="tabela-equipamentos">
                     <div class="row">
                         @foreach ($protocolos as $protocolo)
-                            <div id="equipamento-{{$protocolo->id}}" class="col-md-4 text-center">
+                            <div id="equipamento-{{$protocolo->id}}" class="col-md-4 text-center mt-5">
                                 <img onclick="visualizarEquipamento({{ $protocolo->id }})" type="button"
                                     data-bs-toggle="modal" data-bs-target="#modalEquipamentos" style="width:100px"
                                     src="{{ URL::asset('assets/img/' . $protocolo->tipo . '.png') }}"><br>
@@ -244,7 +245,7 @@
     </div>
     </div>
 
-   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('/assets/js/jquery.js') }}"></script>
     <script src="{{ asset('/assets/js/estante/index.js') }}"></script>
 @endsection

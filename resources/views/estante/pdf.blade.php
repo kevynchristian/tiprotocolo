@@ -20,7 +20,6 @@
     .table-equipamentos {
         width: 700px;
         margin: 0 auto;
-        border: 1px solid black;
     }
 
     .assinatura-escola {
@@ -34,6 +33,15 @@
 
     .align-table {
         text-align: right;
+    }
+    .equipamento {
+        width: 700px;
+        height: 60px;
+        margin-top: 60px; 
+        border: 1px solid black;
+    }
+    img {
+        margin-right: 140px;
     }
 </style>
 
@@ -71,25 +79,27 @@
                     Fone: {{ $equipamentos->protocoloModel->escolaModel->telefone }}
                 @endif
             </strong></h5>
-        <table class="table-equipamentos">
-            <tr>
-                <th>TOMBAMENTO</th>
-                <th>EQUIPAMENTO</th>
-                <th>TÉCNICO</th>
-            </tr>
-            <tr>
-                <td>{{ $equipamentos->tombamento }}</td>
-                <td>{{ $equipamentos->tipoModel->desc }}</td>
-                <td>{{ $equipamentos->funcionarioModel->nome }}</td>
-            </tr>
-            <tr>
-            </tr>
-        </table><br><br>
+            <div class="equipamento" >
+                <table class="table-equipamentos">
+                    <tr>
+                        <th>TOMBAMENTO</th>
+                        <th>EQUIPAMENTO</th>
+                        <th>TÉCNICO</th>
+                    </tr>
+                    <tr>
+                        <td>{{ $equipamentos->tombamento }}</td>
+                        <td>{{ $equipamentos->tipoModel->desc }}</td>
+                        <td>{{ $equipamentos->funcionarioModel->nome }}</td>
+                    </tr>
+                    <tr>
+                    </tr>
+                </table>
+            </div><br><br><br>
         <h5 style="text-align: center "><strong>SOLUÇÃO
             </strong></h5><br>  
         <table style="border: 1px solid black; width: 700px; text-align:center; height: 100px" >
             <th>
-                <strong>{{ $equipamentos->solucao }}</strong>
+                <strong style="font-size: 25px">{{ $equipamentos->solucao }}</strong>
             </th>
         </table><br><br><br><br>
         <table style="width:100%; text-align:center;">

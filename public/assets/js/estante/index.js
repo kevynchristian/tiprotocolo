@@ -96,17 +96,27 @@ function exibirPorStatus(status) {
         $('#andamento').removeClass('back-btn')
         $('#saida').removeClass('back-btn')
         $('#aberto').addClass('back-btn')
+        $('#aberto').css('color', 'white');
+        $('#saida').css('color', 'black');
+        $('#andamento').css('color', 'black');
     }
     if (status == 2) {
         //BACKGROUND
         $('#aberto').removeClass('back-btn')
         $('#saida').removeClass('back-btn')
         $('#andamento').addClass('back-btn')
+        $('#andamento').css('color', 'white');
+        $('#saida').css('color', 'black');
+        $('#aberto').css('color', 'black');
     }
     if (status == 3) {
         $('#aberto').removeClass('back-btn')
         $('#andamento').removeClass('back-btn')
         $('#saida').addClass('back-btn')
+        $('#saida').css('color', 'white');
+        $('#andamento').css('color', 'black');
+        $('#aberto').css('color', 'black');
+        
     }
     $.ajax({
         url: '/estante/index',
@@ -138,6 +148,10 @@ function equipamentoParaAndamento() {
         success: function () {
             $(`#equipamento-${id}`).remove();
             $('#modalEquipamentos').modal('hide');
+            iziToast.info({
+                title: '',
+                message: 'Equipamento para andamento'
+            });
         }
     })
 }
@@ -155,6 +169,7 @@ function equipamentoParaEntrada() {
         success: function () {
             $(`#equipamento-${id}`).remove();
             $('#modalEquipamentos').modal('hide');
+            
         }
     })
 }
@@ -172,6 +187,10 @@ function equipamentoParaSaida() {
         success: function () {
             $(`#equipamento-${id}`).remove();
             $('#modalEquipamentos').modal('hide');
+            iziToast.success({
+                title: '',
+                message: 'Equipamento concluído'
+            });
         }
     })
 }
@@ -190,6 +209,10 @@ function equipamentoParaRetirada() {
         success: function () {
             $(`#equipamento-${id}`).remove();
             $('#modalEquipamentos').modal('hide');
+            iziToast.success({
+                title: '',
+                message: 'Escola retirou o equipamento'
+            });
         }
     })
 }
@@ -207,6 +230,10 @@ function equipamentoParaInservivel() {
         success: function () {
             $(`#equipamento-${id}`).remove();
             $('#modalEquipamentos').modal('hide');
+            iziToast.warning({
+                title: '',
+                message: 'Equipamento inservível'
+            });
         }
     })
 }

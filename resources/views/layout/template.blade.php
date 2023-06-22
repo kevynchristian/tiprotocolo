@@ -88,13 +88,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{route('atendimento-escola.index')}}">
+                <a class="nav-link mx-auto" href="{{route('atendimento-escola.index')}}">
 
                     <span class="nav-link-text ms-1">Atendimento as Escolas</span>
                 </a>
             </li>
 
-            <li class="nav-item ms-3">
+            <li class="nav-item ms-1">
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
@@ -118,7 +118,7 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item ms-3">
+            <li class="nav-item ms-1">
                 <div class="accordion accordion-flush" id="inservivel">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
@@ -144,12 +144,11 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link " href="{{ route('estante.index') }}">
-
                     <span class="nav-link-text ms-1">Estante de Equipamentos </span>
                 </a>
             </li>
 
-            <li class="nav-item ms-3">
+            <li class="nav-item ">
                 <div class="accordion accordion-flush" id="inservivel">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
@@ -173,7 +172,7 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item ms-3">
+            <li class="nav-item ">
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
@@ -213,7 +212,7 @@
                 </a>
             </li>
             @if(Gate::allows('protocolo'))
-                <li class="nav-item ms-3">
+                <li class="nav-item ">
                     <div class="accordion accordion-flush" id="usuarios">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
