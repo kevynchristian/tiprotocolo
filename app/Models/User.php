@@ -53,4 +53,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Funcionario::class, 'funcionario', 'id');
     }
+
+    public function funcaoTeste(){
+        return $this->hasOne(Funcao::class, 'user_id', 'id');
+    }
 }

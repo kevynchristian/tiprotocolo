@@ -147,4 +147,10 @@ class UserController extends Controller
         Auth::logout($id);
         return redirect()->route('login');
     }
+    public function teste($id)
+    {
+        $user = User::where('id', $id)->roleTeste()->first();
+
+        dd($user);
+    }
 }

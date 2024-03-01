@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Route;
 */
 //LOGIN
 
+Route::get('/teste/{id}', [UserController::class, 'teste']);
+
 Route::get('/', [UserController::class, 'login'])->name('login');
 Route::post('/login/store', [UserController::class, 'storeLogin'])->name('login.store');
 Route::get('/logout/{id}', [UserController::class, 'logout'])->name('logout');
