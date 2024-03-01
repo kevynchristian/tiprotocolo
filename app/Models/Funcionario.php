@@ -15,6 +15,12 @@ class Funcionario extends Model {
     public function funcaoModel() {
         return $this->hasOne(Funcao::class, 'id', 'funcao');
     }
+
+    public function user()
+    {
+        return $this->hasMany(\App\Models\User::class, 'funcionario', 'id');
+    }
+
     public function protocoloTombamentoModel() {
         return $this->hasMany(ProtocoloTombamento::class, 'id_responsavel', 'id');
     }

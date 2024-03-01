@@ -19,6 +19,7 @@ class UserController extends Controller
     public function index()
     {
         $funcionarios = Funcionario::all();
+        // dd('a');
         return view('user.index', compact('funcionarios'));
     }
 
